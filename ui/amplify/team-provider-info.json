@@ -1,0 +1,20 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-portalui-dev-131032-authRole",
+            "UnauthRoleArn": "arn:aws:iam::640269937829:role/amplify-portalui-dev-131032-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::640269937829:role/amplify-portalui-dev-131032-authRole",
+            "Region": "eu-west-2",
+            "DeploymentBucketName": "amplify-portalui-dev-131032-deployment",
+            "UnauthRoleName": "amplify-portalui-dev-131032-unauthRole",
+            "StackName": "amplify-portalui-dev-131032",
+            "StackId": "arn:aws:cloudformation:eu-west-2:640269937829:stack/amplify-portalui-dev-131032/f224a450-fe5e-11ea-8f86-0283d9cf08b8",
+            "AmplifyAppId": "d2347tyi357393"
+        },
+        "categories": {
+            "auth": {
+                "portalui8b9d0011": {}
+            }
+        }
+    }
+}
