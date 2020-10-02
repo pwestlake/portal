@@ -2,6 +2,7 @@ package handler
 
 import (
 	"github.com/aws/aws-lambda-go/events"
+	"github.com/pwestlake/portal/lambda/covid19/pkg/handler"
 )
 
 func handle() (events.APIGatewayProxyResponse, error) {

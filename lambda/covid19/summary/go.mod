@@ -1,4 +1,4 @@
-module summary
+module github.com/pwestlake/portal/lambda/covid19/summary
 
 go 1.14
 
