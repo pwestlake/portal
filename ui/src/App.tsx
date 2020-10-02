@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
+import { HbarChartComponent } from './components/chart/hbar-chart/hbar-chart-component';
 
 function App() {
   return (
@@ -9,9 +10,7 @@ function App() {
       <AmplifySignOut />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <HbarChartComponent />
         <a
           className="App-link"
           href="https://reactjs.org"

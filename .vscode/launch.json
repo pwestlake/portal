@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Attach)",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": 5858
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "covid19:HelloWorldFunction",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "lambda/covid19/template.yaml",
+                "logicalId": "HelloWorldFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
+        }
+    ]
+}
