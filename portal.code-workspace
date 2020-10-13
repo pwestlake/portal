@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "lambda/covid19/summary"
+		},
+		{
+			"path": "ui"
+		}
+	]
+}

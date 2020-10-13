@@ -8,3 +8,4 @@ s3_prefix = "covid"
 region = "eu-west-2"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
+parameter_overrides = "DbRegion=\"eu-west-2\" DynamoDbEndpoint=\"https://dynamodb.eu-west-2.amazonaws.com\""

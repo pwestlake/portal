@@ -5,6 +5,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
+import Helmet from 'react-helmet';
+import {BrowserRouter} from 'react-router-dom';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 //Amplify.configure(awsconfig);
 Amplify.configure({
@@ -26,9 +29,25 @@ Amplify.configure({
   }}
 )
 
+const theme = createMuiTheme({
+  palette: {
+    type: 'light',
+  },
+});
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Helmet>
+      <title>Portal</title>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    </Helmet>
+  
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

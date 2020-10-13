@@ -1,0 +1,1268 @@
+[
+    {
+        "countryexp": "Georgia",
+        "totalcases": 8118,
+        "totaldeaths": 50,
+        "popdata2019": 3996762
+    },
+    {
+        "countryexp": "Sri_Lanka",
+        "totalcases": 3402,
+        "totaldeaths": 13,
+        "popdata2019": 21323734
+    },
+    {
+        "countryexp": "Senegal",
+        "totalcases": 15094,
+        "totaldeaths": 312,
+        "popdata2019": 16296362
+    },
+    {
+        "countryexp": "United_Republic_of_Tanzania",
+        "totalcases": 509,
+        "totaldeaths": 21,
+        "popdata2019": 58005461
+    },
+    {
+        "countryexp": "Argentina",
+        "totalcases": 798473,
+        "totaldeaths": 21018,
+        "popdata2019": 44780675
+    },
+    {
+        "countryexp": "Angola",
+        "totalcases": 5370,
+        "totaldeaths": 193,
+        "popdata2019": 31825299
+    },
+    {
+        "countryexp": "Netherlands",
+        "totalcases": 135749,
+        "totaldeaths": 6445,
+        "popdata2019": 17282163
+    },
+    {
+        "countryexp": "Montserrat",
+        "totalcases": 13,
+        "totaldeaths": 1,
+        "popdata2019": 4991
+    },
+    {
+        "countryexp": "Niger",
+        "totalcases": 1200,
+        "totaldeaths": 69,
+        "popdata2019": 23310719
+    },
+    {
+        "countryexp": "Greenland",
+        "totalcases": 14,
+        "totaldeaths": 0,
+        "popdata2019": 56660
+    },
+    {
+        "countryexp": "Saint_Lucia",
+        "totalcases": 27,
+        "totaldeaths": 0,
+        "popdata2019": 182795
+    },
+    {
+        "countryexp": "Central_African_Republic",
+        "totalcases": 4845,
+        "totaldeaths": 62,
+        "popdata2019": 4745179
+    },
+    {
+        "countryexp": "Eswatini",
+        "totalcases": 5569,
+        "totaldeaths": 111,
+        "popdata2019": 1148133
+    },
+    {
+        "countryexp": "Gibraltar",
+        "totalcases": 432,
+        "totaldeaths": 0,
+        "popdata2019": 33706
+    },
+    {
+        "countryexp": "Guyana",
+        "totalcases": 3093,
+        "totaldeaths": 87,
+        "popdata2019": 782775
+    },
+    {
+        "countryexp": "Libya",
+        "totalcases": 36809,
+        "totaldeaths": 592,
+        "popdata2019": 6777453
+    },
+    {
+        "countryexp": "Madagascar",
+        "totalcases": 16558,
+        "totaldeaths": 232,
+        "popdata2019": 26969306
+    },
+    {
+        "countryexp": "Canada",
+        "totalcases": 166156,
+        "totaldeaths": 9481,
+        "popdata2019": 37411038
+    },
+    {
+        "countryexp": "Monaco",
+        "totalcases": 222,
+        "totaldeaths": 1,
+        "popdata2019": 33085
+    },
+    {
+        "countryexp": "Liberia",
+        "totalcases": 1348,
+        "totaldeaths": 82,
+        "popdata2019": 4937374
+    },
+    {
+        "countryexp": "Saudi_Arabia",
+        "totalcases": 336387,
+        "totaldeaths": 4875,
+        "popdata2019": 34268529
+    },
+    {
+        "countryexp": "Greece",
+        "totalcases": 19842,
+        "totaldeaths": 409,
+        "popdata2019": 10724599
+    },
+    {
+        "countryexp": "San_Marino",
+        "totalcases": 732,
+        "totaldeaths": 42,
+        "popdata2019": 34453
+    },
+    {
+        "countryexp": "Myanmar",
+        "totalcases": 17794,
+        "totaldeaths": 412,
+        "popdata2019": 54045422
+    },
+    {
+        "countryexp": "Maldives",
+        "totalcases": 10530,
+        "totaldeaths": 34,
+        "popdata2019": 530957
+    },
+    {
+        "countryexp": "Serbia",
+        "totalcases": 33901,
+        "totaldeaths": 754,
+        "popdata2019": 6963764
+    },
+    {
+        "countryexp": "Haiti",
+        "totalcases": 8819,
+        "totaldeaths": 229,
+        "popdata2019": 11263079
+    },
+    {
+        "countryexp": "Uganda",
+        "totalcases": 8808,
+        "totaldeaths": 81,
+        "popdata2019": 44269587
+    },
+    {
+        "countryexp": "Belarus",
+        "totalcases": 80295,
+        "totaldeaths": 857,
+        "popdata2019": 9452409
+    },
+    {
+        "countryexp": "Ecuador",
+        "totalcases": 141034,
+        "totaldeaths": 11647,
+        "popdata2019": 17373657
+    },
+    {
+        "countryexp": "Cases_on_an_international_conveyance_Japan",
+        "totalcases": 696,
+        "totaldeaths": 7,
+        "popdata2019": 0
+    },
+    {
+        "countryexp": "Guatemala",
+        "totalcases": 93963,
+        "totaldeaths": 3293,
+        "popdata2019": 17581476
+    },
+    {
+        "countryexp": "New_Zealand",
+        "totalcases": 1499,
+        "totaldeaths": 25,
+        "popdata2019": 4783062
+    },
+    {
+        "countryexp": "Anguilla",
+        "totalcases": 3,
+        "totaldeaths": 0,
+        "popdata2019": 14872
+    },
+    {
+        "countryexp": "Tunisia",
+        "totalcases": 23453,
+        "totaldeaths": 321,
+        "popdata2019": 11694721
+    },
+    {
+        "countryexp": "Slovenia",
+        "totalcases": 6498,
+        "totaldeaths": 140,
+        "popdata2019": 2080908
+    },
+    {
+        "countryexp": "Malawi",
+        "totalcases": 5786,
+        "totaldeaths": 179,
+        "popdata2019": 18628749
+    },
+    {
+        "countryexp": "Mauritius",
+        "totalcases": 381,
+        "totaldeaths": 10,
+        "popdata2019": 1269670
+    },
+    {
+        "countryexp": "Bulgaria",
+        "totalcases": 21587,
+        "totaldeaths": 844,
+        "popdata2019": 7000039
+    },
+    {
+        "countryexp": "Nicaragua",
+        "totalcases": 5170,
+        "totaldeaths": 151,
+        "popdata2019": 6545503
+    },
+    {
+        "countryexp": "Burkina_Faso",
+        "totalcases": 2167,
+        "totaldeaths": 59,
+        "popdata2019": 20321383
+    },
+    {
+        "countryexp": "Mongolia",
+        "totalcases": 314,
+        "totaldeaths": 0,
+        "popdata2019": 3225166
+    },
+    {
+        "countryexp": "Brunei_Darussalam",
+        "totalcases": 146,
+        "totaldeaths": 3,
+        "popdata2019": 433296
+    },
+    {
+        "countryexp": "Spain",
+        "totalcases": 789932,
+        "totaldeaths": 32086,
+        "popdata2019": 46937060
+    },
+    {
+        "countryexp": "Dominican_Republic",
+        "totalcases": 114480,
+        "totaldeaths": 2134,
+        "popdata2019": 10738957
+    },
+    {
+        "countryexp": "Bahrain",
+        "totalcases": 72662,
+        "totaldeaths": 260,
+        "popdata2019": 1641164
+    },
+    {
+        "countryexp": "Romania",
+        "totalcases": 134065,
+        "totaldeaths": 4947,
+        "popdata2019": 19414458
+    },
+    {
+        "countryexp": "Iceland",
+        "totalcases": 2921,
+        "totaldeaths": 10,
+        "popdata2019": 356991
+    },
+    {
+        "countryexp": "Ethiopia",
+        "totalcases": 78819,
+        "totaldeaths": 1222,
+        "popdata2019": 112078727
+    },
+    {
+        "countryexp": "Sint_Maarten",
+        "totalcases": 679,
+        "totaldeaths": 22,
+        "popdata2019": 42389
+    },
+    {
+        "countryexp": "Sweden",
+        "totalcases": 94283,
+        "totaldeaths": 5895,
+        "popdata2019": 10230185
+    },
+    {
+        "countryexp": "Tajikistan",
+        "totalcases": 9935,
+        "totaldeaths": 78,
+        "popdata2019": 9321023
+    },
+    {
+        "countryexp": "Timor_Leste",
+        "totalcases": 28,
+        "totaldeaths": 0,
+        "popdata2019": 1293120
+    },
+    {
+        "countryexp": "Peru",
+        "totalcases": 828169,
+        "totaldeaths": 32742,
+        "popdata2019": 32510462
+    },
+    {
+        "countryexp": "Andorra",
+        "totalcases": 2110,
+        "totaldeaths": 53,
+        "popdata2019": 76177
+    },
+    {
+        "countryexp": "Namibia",
+        "totalcases": 11626,
+        "totaldeaths": 123,
+        "popdata2019": 2494524
+    },
+    {
+        "countryexp": "Grenada",
+        "totalcases": 24,
+        "totaldeaths": 0,
+        "popdata2019": 112002
+    },
+    {
+        "countryexp": "Northern_Mariana_Islands",
+        "totalcases": 73,
+        "totaldeaths": 2,
+        "popdata2019": 57213
+    },
+    {
+        "countryexp": "Kyrgyzstan",
+        "totalcases": 47635,
+        "totaldeaths": 1066,
+        "popdata2019": 6415851
+    },
+    {
+        "countryexp": "Thailand",
+        "totalcases": 3590,
+        "totaldeaths": 59,
+        "popdata2019": 69625581
+    },
+    {
+        "countryexp": "Bermuda",
+        "totalcases": 181,
+        "totaldeaths": 9,
+        "popdata2019": 62508
+    },
+    {
+        "countryexp": "Uzbekistan",
+        "totalcases": 58859,
+        "totaldeaths": 483,
+        "popdata2019": 32981715
+    },
+    {
+        "countryexp": "French_Polynesia",
+        "totalcases": 1964,
+        "totaldeaths": 8,
+        "popdata2019": 279285
+    },
+    {
+        "countryexp": "United_Kingdom",
+        "totalcases": 502978,
+        "totaldeaths": 42350,
+        "popdata2019": 66647112
+    },
+    {
+        "countryexp": "Guernsey",
+        "totalcases": 257,
+        "totaldeaths": 13,
+        "popdata2019": 64468
+    },
+    {
+        "countryexp": "Japan",
+        "totalcases": 85739,
+        "totaldeaths": 1599,
+        "popdata2019": 126860299
+    },
+    {
+        "countryexp": "Papua_New_Guinea",
+        "totalcases": 540,
+        "totaldeaths": 7,
+        "popdata2019": 8776119
+    },
+    {
+        "countryexp": "Oman",
+        "totalcases": 101270,
+        "totaldeaths": 977,
+        "popdata2019": 4974992
+    },
+    {
+        "countryexp": "Jersey",
+        "totalcases": 421,
+        "totaldeaths": 32,
+        "popdata2019": 107796
+    },
+    {
+        "countryexp": "Zimbabwe",
+        "totalcases": 7885,
+        "totaldeaths": 228,
+        "popdata2019": 14645473
+    },
+    {
+        "countryexp": "Guinea",
+        "totalcases": 10754,
+        "totaldeaths": 66,
+        "popdata2019": 12771246
+    },
+    {
+        "countryexp": "Norway",
+        "totalcases": 14149,
+        "totaldeaths": 275,
+        "popdata2019": 5328212
+    },
+    {
+        "countryexp": "Western_Sahara",
+        "totalcases": 766,
+        "totaldeaths": 1,
+        "popdata2019": 582458
+    },
+    {
+        "countryexp": "Jamaica",
+        "totalcases": 6895,
+        "totaldeaths": 120,
+        "popdata2019": 2948277
+    },
+    {
+        "countryexp": "Philippines",
+        "totalcases": 322497,
+        "totaldeaths": 5776,
+        "popdata2019": 108116622
+    },
+    {
+        "countryexp": "Zambia",
+        "totalcases": 15052,
+        "totaldeaths": 333,
+        "popdata2019": 17861034
+    },
+    {
+        "countryexp": "Turks_and_Caicos_islands",
+        "totalcases": 695,
+        "totaldeaths": 6,
+        "popdata2019": 38194
+    },
+    {
+        "countryexp": "Togo",
+        "totalcases": 1854,
+        "totaldeaths": 48,
+        "popdata2019": 8082359
+    },
+    {
+        "countryexp": "China",
+        "totalcases": 90629,
+        "totaldeaths": 4739,
+        "popdata2019": 1433783692
+    },
+    {
+        "countryexp": "Slovakia",
+        "totalcases": 13139,
+        "totaldeaths": 55,
+        "popdata2019": 5450421
+    },
+    {
+        "countryexp": "South_Africa",
+        "totalcases": 681289,
+        "totaldeaths": 16976,
+        "popdata2019": 58558267
+    },
+    {
+        "countryexp": "Congo",
+        "totalcases": 5089,
+        "totaldeaths": 89,
+        "popdata2019": 5380504
+    },
+    {
+        "countryexp": "Portugal",
+        "totalcases": 78247,
+        "totaldeaths": 1995,
+        "popdata2019": 10276617
+    },
+    {
+        "countryexp": "Nigeria",
+        "totalcases": 59345,
+        "totaldeaths": 1113,
+        "popdata2019": 200963603
+    },
+    {
+        "countryexp": "Kazakhstan",
+        "totalcases": 141844,
+        "totaldeaths": 2085,
+        "popdata2019": 18551428
+    },
+    {
+        "countryexp": "Poland",
+        "totalcases": 98140,
+        "totaldeaths": 2604,
+        "popdata2019": 37972812
+    },
+    {
+        "countryexp": "Lithuania",
+        "totalcases": 5185,
+        "totaldeaths": 94,
+        "popdata2019": 2794184
+    },
+    {
+        "countryexp": "Armenia",
+        "totalcases": 52496,
+        "totaldeaths": 977,
+        "popdata2019": 2957728
+    },
+    {
+        "countryexp": "Germany",
+        "totalcases": 300619,
+        "totaldeaths": 9534,
+        "popdata2019": 83019213
+    },
+    {
+        "countryexp": "Cyprus",
+        "totalcases": 1824,
+        "totaldeaths": 22,
+        "popdata2019": 875899
+    },
+    {
+        "countryexp": "South_Sudan",
+        "totalcases": 2726,
+        "totaldeaths": 50,
+        "popdata2019": 11062114
+    },
+    {
+        "countryexp": "Sierra_Leone",
+        "totalcases": 2269,
+        "totaldeaths": 72,
+        "popdata2019": 7813207
+    },
+    {
+        "countryexp": "Guinea_Bissau",
+        "totalcases": 2362,
+        "totaldeaths": 39,
+        "popdata2019": 1920917
+    },
+    {
+        "countryexp": "Gabon",
+        "totalcases": 8797,
+        "totaldeaths": 54,
+        "popdata2019": 2172578
+    },
+    {
+        "countryexp": "Albania",
+        "totalcases": 14266,
+        "totaldeaths": 396,
+        "popdata2019": 2862427
+    },
+    {
+        "countryexp": "United_States_of_America",
+        "totalcases": 7417845,
+        "totaldeaths": 209794,
+        "popdata2019": 329064917
+    },
+    {
+        "countryexp": "Moldova",
+        "totalcases": 56579,
+        "totaldeaths": 1366,
+        "popdata2019": 4043258
+    },
+    {
+        "countryexp": "Egypt",
+        "totalcases": 103683,
+        "totaldeaths": 5981,
+        "popdata2019": 100388076
+    },
+    {
+        "countryexp": "Seychelles",
+        "totalcases": 145,
+        "totaldeaths": 0,
+        "popdata2019": 97741
+    },
+    {
+        "countryexp": "Brazil",
+        "totalcases": 4915289,
+        "totaldeaths": 146352,
+        "popdata2019": 211049519
+    },
+    {
+        "countryexp": "Lesotho",
+        "totalcases": 1680,
+        "totaldeaths": 39,
+        "popdata2019": 2125267
+    },
+    {
+        "countryexp": "Mozambique",
+        "totalcases": 9196,
+        "totaldeaths": 66,
+        "popdata2019": 30366043
+    },
+    {
+        "countryexp": "Denmark",
+        "totalcases": 29680,
+        "totaldeaths": 658,
+        "popdata2019": 5806081
+    },
+    {
+        "countryexp": "Jordan",
+        "totalcases": 15640,
+        "totaldeaths": 101,
+        "popdata2019": 10101697
+    },
+    {
+        "countryexp": "North_Macedonia",
+        "totalcases": 18602,
+        "totaldeaths": 753,
+        "popdata2019": 2077132
+    },
+    {
+        "countryexp": "Honduras",
+        "totalcases": 79629,
+        "totaldeaths": 2422,
+        "popdata2019": 9746115
+    },
+    {
+        "countryexp": "Chad",
+        "totalcases": 1217,
+        "totaldeaths": 86,
+        "popdata2019": 15946882
+    },
+    {
+        "countryexp": "Liechtenstein",
+        "totalcases": 126,
+        "totaldeaths": 1,
+        "popdata2019": 38378
+    },
+    {
+        "countryexp": "Fiji",
+        "totalcases": 32,
+        "totaldeaths": 2,
+        "popdata2019": 889955
+    },
+    {
+        "countryexp": "Curaçao",
+        "totalcases": 452,
+        "totaldeaths": 1,
+        "popdata2019": 163423
+    },
+    {
+        "countryexp": "Eritrea",
+        "totalcases": 398,
+        "totaldeaths": 0,
+        "popdata2019": 3497117
+    },
+    {
+        "countryexp": "Saint_Vincent_and_the_Grenadines",
+        "totalcases": 64,
+        "totaldeaths": 0,
+        "popdata2019": 110593
+    },
+    {
+        "countryexp": "Cuba",
+        "totalcases": 5809,
+        "totaldeaths": 122,
+        "popdata2019": 11333484
+    },
+    {
+        "countryexp": "Azerbaijan",
+        "totalcases": 40691,
+        "totaldeaths": 596,
+        "popdata2019": 10047719
+    },
+    {
+        "countryexp": "United_States_Virgin_Islands",
+        "totalcases": 1327,
+        "totaldeaths": 20,
+        "popdata2019": 104579
+    },
+    {
+        "countryexp": "Qatar",
+        "totalcases": 126498,
+        "totaldeaths": 216,
+        "popdata2019": 2832071
+    },
+    {
+        "countryexp": "Guam",
+        "totalcases": 2699,
+        "totaldeaths": 52,
+        "popdata2019": 167295
+    },
+    {
+        "countryexp": "Cambodia",
+        "totalcases": 280,
+        "totaldeaths": 0,
+        "popdata2019": 16486542
+    },
+    {
+        "countryexp": "Pakistan",
+        "totalcases": 314616,
+        "totaldeaths": 6513,
+        "popdata2019": 216565317
+    },
+    {
+        "countryexp": "France",
+        "totalcases": 619170,
+        "totaldeaths": 32230,
+        "popdata2019": 67012883
+    },
+    {
+        "countryexp": "Bolivia",
+        "totalcases": 136868,
+        "totaldeaths": 8101,
+        "popdata2019": 11513102
+    },
+    {
+        "countryexp": "Turkey",
+        "totalcases": 324443,
+        "totaldeaths": 8441,
+        "popdata2019": 82003882
+    },
+    {
+        "countryexp": "Malaysia",
+        "totalcases": 12381,
+        "totaldeaths": 137,
+        "popdata2019": 31949789
+    },
+    {
+        "countryexp": "Estonia",
+        "totalcases": 3607,
+        "totaldeaths": 67,
+        "popdata2019": 1324820
+    },
+    {
+        "countryexp": "Morocco",
+        "totalcases": 133272,
+        "totaldeaths": 2330,
+        "popdata2019": 36471766
+    },
+    {
+        "countryexp": "Algeria",
+        "totalcases": 52136,
+        "totaldeaths": 1760,
+        "popdata2019": 43053054
+    },
+    {
+        "countryexp": "Israel",
+        "totalcases": 268175,
+        "totaldeaths": 1719,
+        "popdata2019": 8519373
+    },
+    {
+        "countryexp": "Cameroon",
+        "totalcases": 20924,
+        "totaldeaths": 420,
+        "popdata2019": 25876387
+    },
+    {
+        "countryexp": "Ukraine",
+        "totalcases": 226462,
+        "totaldeaths": 4397,
+        "popdata2019": 43993643
+    },
+    {
+        "countryexp": "Rwanda",
+        "totalcases": 4866,
+        "totaldeaths": 29,
+        "popdata2019": 12626938
+    },
+    {
+        "countryexp": "Sudan",
+        "totalcases": 13653,
+        "totaldeaths": 836,
+        "popdata2019": 42813237
+    },
+    {
+        "countryexp": "Iraq",
+        "totalcases": 379141,
+        "totaldeaths": 9399,
+        "popdata2019": 39309789
+    },
+    {
+        "countryexp": "Holy_See",
+        "totalcases": 12,
+        "totaldeaths": 0,
+        "popdata2019": 815
+    },
+    {
+        "countryexp": "Sao_Tome_and_Principe",
+        "totalcases": 913,
+        "totaldeaths": 15,
+        "popdata2019": 215048
+    },
+    {
+        "countryexp": "Taiwan",
+        "totalcases": 517,
+        "totaldeaths": 7,
+        "popdata2019": 23773881
+    },
+    {
+        "countryexp": "New_Caledonia",
+        "totalcases": 27,
+        "totaldeaths": 0,
+        "popdata2019": 282757
+    },
+    {
+        "countryexp": "Equatorial_Guinea",
+        "totalcases": 5045,
+        "totaldeaths": 83,
+        "popdata2019": 1355982
+    },
+    {
+        "countryexp": "Comoros",
+        "totalcases": 487,
+        "totaldeaths": 7,
+        "popdata2019": 850891
+    },
+    {
+        "countryexp": "Latvia",
+        "totalcases": 2086,
+        "totaldeaths": 38,
+        "popdata2019": 1919968
+    },
+    {
+        "countryexp": "Falkland_Islands_(Malvinas)",
+        "totalcases": 13,
+        "totaldeaths": 0,
+        "popdata2019": 3372
+    },
+    {
+        "countryexp": "Austria",
+        "totalcases": 48618,
+        "totaldeaths": 813,
+        "popdata2019": 8858775
+    },
+    {
+        "countryexp": "Benin",
+        "totalcases": 2357,
+        "totaldeaths": 41,
+        "popdata2019": 11801151
+    },
+    {
+        "countryexp": "Kenya",
+        "totalcases": 39427,
+        "totaldeaths": 731,
+        "popdata2019": 52573967
+    },
+    {
+        "countryexp": "Belgium",
+        "totalcases": 130141,
+        "totaldeaths": 10064,
+        "popdata2019": 11455519
+    },
+    {
+        "countryexp": "Trinidad_and_Tobago",
+        "totalcases": 4763,
+        "totaldeaths": 81,
+        "popdata2019": 1394969
+    },
+    {
+        "countryexp": "Colombia",
+        "totalcases": 855052,
+        "totaldeaths": 26712,
+        "popdata2019": 50339443
+    },
+    {
+        "countryexp": "Luxembourg",
+        "totalcases": 8709,
+        "totaldeaths": 125,
+        "popdata2019": 613894
+    },
+    {
+        "countryexp": "Kosovo",
+        "totalcases": 15814,
+        "totaldeaths": 630,
+        "popdata2019": 1798506
+    },
+    {
+        "countryexp": "Finland",
+        "totalcases": 10538,
+        "totaldeaths": 345,
+        "popdata2019": 5517919
+    },
+    {
+        "countryexp": "Russia",
+        "totalcases": 1215001,
+        "totaldeaths": 21358,
+        "popdata2019": 145872260
+    },
+    {
+        "countryexp": "Botswana",
+        "totalcases": 3172,
+        "totaldeaths": 16,
+        "popdata2019": 2303703
+    },
+    {
+        "countryexp": "Costa_Rica",
+        "totalcases": 79182,
+        "totaldeaths": 950,
+        "popdata2019": 5047561
+    },
+    {
+        "countryexp": "South_Korea",
+        "totalcases": 24164,
+        "totaldeaths": 422,
+        "popdata2019": 51225321
+    },
+    {
+        "countryexp": "Laos",
+        "totalcases": 23,
+        "totaldeaths": 0,
+        "popdata2019": 7169456
+    },
+    {
+        "countryexp": "United_Arab_Emirates",
+        "totalcases": 98801,
+        "totaldeaths": 426,
+        "popdata2019": 9770526
+    },
+    {
+        "countryexp": "Vietnam",
+        "totalcases": 1096,
+        "totaldeaths": 35,
+        "popdata2019": 96462108
+    },
+    {
+        "countryexp": "Faroe_Islands",
+        "totalcases": 474,
+        "totaldeaths": 0,
+        "popdata2019": 48677
+    },
+    {
+        "countryexp": "Iran",
+        "totalcases": 471772,
+        "totaldeaths": 26957,
+        "popdata2019": 82913893
+    },
+    {
+        "countryexp": "Mexico",
+        "totalcases": 761665,
+        "totaldeaths": 79088,
+        "popdata2019": 127575529
+    },
+    {
+        "countryexp": "Lebanon",
+        "totalcases": 44482,
+        "totaldeaths": 406,
+        "popdata2019": 6855709
+    },
+    {
+        "countryexp": "Venezuela",
+        "totalcases": 78434,
+        "totaldeaths": 653,
+        "popdata2019": 28515829
+    },
+    {
+        "countryexp": "Afghanistan",
+        "totalcases": 39341,
+        "totaldeaths": 1462,
+        "popdata2019": 38041757
+    },
+    {
+        "countryexp": "Mali",
+        "totalcases": 3184,
+        "totaldeaths": 131,
+        "popdata2019": 19658023
+    },
+    {
+        "countryexp": "CuraÃ§ao",
+        "totalcases": 25,
+        "totaldeaths": 1,
+        "popdata2019": 0
+    },
+    {
+        "countryexp": "Croatia",
+        "totalcases": 17659,
+        "totaldeaths": 298,
+        "popdata2019": 4076246
+    },
+    {
+        "countryexp": "Italy",
+        "totalcases": 325329,
+        "totaldeaths": 35986,
+        "popdata2019": 60359546
+    },
+    {
+        "countryexp": "Montenegro",
+        "totalcases": 12127,
+        "totaldeaths": 179,
+        "popdata2019": 622182
+    },
+    {
+        "countryexp": "Mauritania",
+        "totalcases": 7520,
+        "totaldeaths": 161,
+        "popdata2019": 4525698
+    },
+    {
+        "countryexp": "Ghana",
+        "totalcases": 46829,
+        "totaldeaths": 303,
+        "popdata2019": 30417858
+    },
+    {
+        "countryexp": "Saint_Kitts_and_Nevis",
+        "totalcases": 19,
+        "totaldeaths": 0,
+        "popdata2019": 52834
+    },
+    {
+        "countryexp": "Puerto_Rico",
+        "totalcases": 50675,
+        "totaldeaths": 686,
+        "popdata2019": 2933404
+    },
+    {
+        "countryexp": "Australia",
+        "totalcases": 27136,
+        "totaldeaths": 894,
+        "popdata2019": 25203200
+    },
+    {
+        "countryexp": "Switzerland",
+        "totalcases": 54263,
+        "totaldeaths": 1783,
+        "popdata2019": 8544527
+    },
+    {
+        "countryexp": "Bangladesh",
+        "totalcases": 368690,
+        "totaldeaths": 5348,
+        "popdata2019": 163046173
+    },
+    {
+        "countryexp": "Cayman_Islands",
+        "totalcases": 213,
+        "totaldeaths": 1,
+        "popdata2019": 64948
+    },
+    {
+        "countryexp": "Bosnia_and_Herzegovina",
+        "totalcases": 27975,
+        "totaldeaths": 871,
+        "popdata2019": 3300998
+    },
+    {
+        "countryexp": "Cote_dIvoire",
+        "totalcases": 19882,
+        "totaldeaths": 120,
+        "popdata2019": 25716554
+    },
+    {
+        "countryexp": "Chile",
+        "totalcases": 470179,
+        "totaldeaths": 12979,
+        "popdata2019": 18952035
+    },
+    {
+        "countryexp": "Bahamas",
+        "totalcases": 4409,
+        "totaldeaths": 96,
+        "popdata2019": 389486
+    },
+    {
+        "countryexp": "Aruba",
+        "totalcases": 4079,
+        "totaldeaths": 30,
+        "popdata2019": 106310
+    },
+    {
+        "countryexp": "Uruguay",
+        "totalcases": 2145,
+        "totaldeaths": 48,
+        "popdata2019": 3461731
+    },
+    {
+        "countryexp": "Democratic_Republic_of_the_Congo",
+        "totalcases": 10759,
+        "totaldeaths": 273,
+        "popdata2019": 86790568
+    },
+    {
+        "countryexp": "Palestine",
+        "totalcases": 52433,
+        "totaldeaths": 391,
+        "popdata2019": 4981422
+    },
+    {
+        "countryexp": "Kuwait",
+        "totalcases": 107025,
+        "totaldeaths": 624,
+        "popdata2019": 4207077
+    },
+    {
+        "countryexp": "Paraguay",
+        "totalcases": 44182,
+        "totaldeaths": 929,
+        "popdata2019": 7044639
+    },
+    {
+        "countryexp": "Somalia",
+        "totalcases": 3745,
+        "totaldeaths": 99,
+        "popdata2019": 15442906
+    },
+    {
+        "countryexp": "Cape_Verde",
+        "totalcases": 6360,
+        "totaldeaths": 65,
+        "popdata2019": 549936
+    },
+    {
+        "countryexp": "Singapore",
+        "totalcases": 57812,
+        "totaldeaths": 27,
+        "popdata2019": 5804343
+    },
+    {
+        "countryexp": "Belize",
+        "totalcases": 2196,
+        "totaldeaths": 30,
+        "popdata2019": 390351
+    },
+    {
+        "countryexp": "Hungary",
+        "totalcases": 31480,
+        "totaldeaths": 833,
+        "popdata2019": 9772756
+    },
+    {
+        "countryexp": "Czechia",
+        "totalcases": 82446,
+        "totaldeaths": 727,
+        "popdata2019": 10649800
+    },
+    {
+        "countryexp": "Gambia",
+        "totalcases": 3594,
+        "totaldeaths": 115,
+        "popdata2019": 2347696
+    },
+    {
+        "countryexp": "Ireland",
+        "totalcases": 38032,
+        "totaldeaths": 1810,
+        "popdata2019": 4904240
+    },
+    {
+        "countryexp": "Indonesia",
+        "totalcases": 303498,
+        "totaldeaths": 11151,
+        "popdata2019": 270625567
+    },
+    {
+        "countryexp": "Panama",
+        "totalcases": 115286,
+        "totaldeaths": 2423,
+        "popdata2019": 4246440
+    },
+    {
+        "countryexp": "Nepal",
+        "totalcases": 86823,
+        "totaldeaths": 535,
+        "popdata2019": 28608715
+    },
+    {
+        "countryexp": "Burundi",
+        "totalcases": 513,
+        "totaldeaths": 1,
+        "popdata2019": 11530577
+    },
+    {
+        "countryexp": "Bhutan",
+        "totalcases": 298,
+        "totaldeaths": 0,
+        "popdata2019": 763094
+    },
+    {
+        "countryexp": "India",
+        "totalcases": 6623815,
+        "totaldeaths": 102685,
+        "popdata2019": 1366417756
+    },
+    {
+        "countryexp": "Syria",
+        "totalcases": 4366,
+        "totaldeaths": 205,
+        "popdata2019": 17070132
+    },
+    {
+        "countryexp": "El_Salvador",
+        "totalcases": 29450,
+        "totaldeaths": 863,
+        "popdata2019": 6453550
+    },
+    {
+        "countryexp": "Yemen",
+        "totalcases": 2045,
+        "totaldeaths": 591,
+        "popdata2019": 29161922
+    },
+    {
+        "countryexp": "British_Virgin_Islands",
+        "totalcases": 71,
+        "totaldeaths": 1,
+        "popdata2019": 30033
+    },
+    {
+        "countryexp": "Isle_of_Man",
+        "totalcases": 342,
+        "totaldeaths": 24,
+        "popdata2019": 84589
+    },
+    {
+        "countryexp": "Malta",
+        "totalcases": 3139,
+        "totaldeaths": 37,
+        "popdata2019": 493559
+    },
+    {
+        "countryexp": "Dominica",
+        "totalcases": 31,
+        "totaldeaths": 0,
+        "popdata2019": 71808
+    },
+    {
+        "countryexp": "Suriname",
+        "totalcases": 4941,
+        "totaldeaths": 106,
+        "popdata2019": 581363
+    },
+    {
+        "countryexp": "Djibouti",
+        "totalcases": 5419,
+        "totaldeaths": 61,
+        "popdata2019": 973557
+    },
+    {
+        "countryexp": "Barbados",
+        "totalcases": 199,
+        "totaldeaths": 7,
+        "popdata2019": 287021
+    },
+    {
+        "countryexp": "Antigua_and_Barbuda",
+        "totalcases": 107,
+        "totaldeaths": 3,
+        "popdata2019": 97115
+    },
+    {
+        "countryexp": "Bonaire, Saint Eustatius and Saba",
+        "totalcases": 124,
+        "totaldeaths": 1,
+        "popdata2019": 25983
+    }
+]
