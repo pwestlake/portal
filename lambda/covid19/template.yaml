@@ -70,7 +70,28 @@ Resources:
           PARAM1: VALUE
           REGION: '{{resolve:ssm:/covid19/DbRegion:1}}'
           DYNAMODB_ENDPOINT: '{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}'
-
+  UserPreferencesFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: preferences/
+      Handler: preferences
+      Runtime: go1.x
+      Tracing: Active 
+      Events:
+        GetPreference:
+          Type: Api 
+          Properties:
+            Path: /userservice/preferences/{user}/{key}
+            Method: GET
+        PostPreference:
+          Type: Api 
+          Properties:
+            Path: /userservice/preferences/{user}/{key}
+            Method: POST
+      Environment: 
+        Variables:
+          REGION: '{{resolve:ssm:/covid19/DbRegion:1}}'
+          DYNAMODB_ENDPOINT: '{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}'        
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM

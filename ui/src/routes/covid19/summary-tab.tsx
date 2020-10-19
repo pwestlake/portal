@@ -2,25 +2,37 @@ import React from "react";
 import { Grid, Card, CardHeader, CardContent } from "@material-ui/core";
 import { API, Auth } from "aws-amplify";
 import { KeyValueModel } from "../../models/keyvalue";
-import HbarChartComponent from "../../components/chart/hbar-chart/hbar-chart-component";
+import HBarChart from "../../components/chart/hbar-chart/hbar-chart";
+import { ResizeObserver } from 'resize-observer';
 
 interface SummaryTabState {
     cases: KeyValueModel[];
     deaths: KeyValueModel[];
+    dimension: {
+        height: number;
+        width: number;
+    };
 }
   
 interface SummaryTabProps {
 }
-
+  
 export class SummaryTab extends React.Component<SummaryTabProps, SummaryTabState> {
 
     constructor(props: any) {
       super(props);
       this.state = {
           cases: [] as KeyValueModel[],
-          deaths: [] as KeyValueModel[]
+          deaths: [] as KeyValueModel[],
+          dimension: {
+              height: 0,
+              width: 0
+          }
       };
     }
+
+    ref: HTMLDivElement | null = null; 
+    resizeObserver: ResizeObserver | null = null;
 
     async componentDidMount() {
         let sessionObject = await Auth.currentSession();
@@ -46,6 +58,21 @@ export class SummaryTab extends React.Component<SummaryTabProps, SummaryTabState
             .catch(error => {
                 console.log(error.response);
             });
+        
+        this.resizeObserver = new ResizeObserver((entries) => {
+            this.setState({
+                dimension: {
+                    width: this.ref!.getBoundingClientRect().width,
+                    height: this.ref!.getBoundingClientRect().height,
+                }
+            });
+        });
+        
+        this.resizeObserver.observe(this.ref!);
+    }
+    
+    componentWillUnmount() {
+        this.resizeObserver?.disconnect();
     }
     
     render() {
@@ -57,7 +84,9 @@ export class SummaryTab extends React.Component<SummaryTabProps, SummaryTabState
                             
                         </CardHeader>
                         <CardContent className="card">
-                            <HbarChartComponent data={this.state.cases}/>
+                            <div style={{height: "100%", width: "100%"}} ref={el => (this.ref = el)}>
+                                <HBarChart data={this.state.cases} width={this.state.dimension.width} height={this.state.dimension.height}/>
+                            </div>
                         </CardContent>
                     </Card>
                 </Grid>
@@ -67,7 +96,7 @@ export class SummaryTab extends React.Component<SummaryTabProps, SummaryTabState
                             
                         </CardHeader>
                         <CardContent className="card">
-                            <HbarChartComponent data={this.state.deaths}/>
+                            <HBarChart data={this.state.deaths} width={this.state.dimension.width} height={this.state.dimension.height}/>
                         </CardContent>
                     </Card>
                 </Grid>

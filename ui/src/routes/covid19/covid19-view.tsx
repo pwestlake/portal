@@ -1,6 +1,6 @@
 import React from "react";
 import './covid19-view.css';
-import { Box, Typography, AppBar, Tabs, Tab } from "@material-ui/core";
+import { Box, Typography, AppBar, Tabs, Tab, Paper } from "@material-ui/core";
 import { SummaryTab } from "./summary-tab";
 
 interface Covid19ViewState {
@@ -71,18 +71,20 @@ export class Covid19View extends React.Component<Covid19ViewProps, Covid19ViewSt
           <Tab label="Topic" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <TabPanel value={this.state.tab} index={0}>
-        <SummaryTab />
-      </TabPanel>
-      <TabPanel value={this.state.tab} index={1}>
-        
-      </TabPanel>
-      <TabPanel value={this.state.tab} index={2}>
-      <Typography>Item Two</Typography>
-      </TabPanel>
-      <TabPanel value={this.state.tab} index={3}>
-      <Typography>Item Two</Typography>
-      </TabPanel>
+      <Paper square={true}>
+        <TabPanel value={this.state.tab} index={0}>
+          <SummaryTab />
+        </TabPanel>
+        <TabPanel value={this.state.tab} index={1}>
+          
+        </TabPanel>
+        <TabPanel value={this.state.tab} index={2}>
+        <Typography>Item Two</Typography>
+        </TabPanel>
+        <TabPanel value={this.state.tab} index={3}>
+        <Typography>Item Two</Typography>
+        </TabPanel>
+      </Paper>
 
 
     </div>
