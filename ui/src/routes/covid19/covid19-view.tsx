@@ -2,6 +2,7 @@ import React from "react";
 import './covid19-view.css';
 import { Box, Typography, AppBar, Tabs, Tab, Paper } from "@material-ui/core";
 import { SummaryTab } from "./summary-tab";
+import { CountryTab } from "./country-tab";
 
 interface Covid19ViewState {
   tab: number;
@@ -28,7 +29,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
+        <Box p={2}>
           <div>{children}</div>
         </Box>
       )}
@@ -63,7 +64,7 @@ export class Covid19View extends React.Component<Covid19ViewProps, Covid19ViewSt
       <AppBar position="static" elevation={0}>
         <Tabs value={this.state.tab} onChange={this.tabChanged}
           variant="scrollable"
-          scrollButtons="on"
+          scrollButtons="auto"
           aria-label="covid-19 tabs">
           <Tab label="Summary" {...a11yProps(0)} />
           <Tab label="Country" {...a11yProps(1)} />
@@ -76,7 +77,7 @@ export class Covid19View extends React.Component<Covid19ViewProps, Covid19ViewSt
           <SummaryTab />
         </TabPanel>
         <TabPanel value={this.state.tab} index={1}>
-          
+          <CountryTab />  
         </TabPanel>
         <TabPanel value={this.state.tab} index={2}>
         <Typography>Item Two</Typography>

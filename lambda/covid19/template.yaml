@@ -1,8 +1,8 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
   covid19
-  
+
   Sample SAM Template for covid19
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
@@ -28,7 +28,7 @@ Resources:
       Name: /covid19/DbRegion
       Type: String
       Value: !Ref DbRegion
-  
+
   DynamoDbEndpointParameter:
     Type: AWS::SSM::Parameter
     Properties:
@@ -53,45 +53,81 @@ Resources:
         Variables:
           PARAM1: VALUE
   SummaryFunction:
-    Type: AWS::Serverless::Function 
+    Type: AWS::Serverless::Function
     Properties:
       CodeUri: summary/
       Handler: summary
       Runtime: go1.x
-      Tracing: Active 
+      Tracing: Active
       Events:
         CatchAll:
-          Type: Api 
+          Type: Api
           Properties:
             Path: /summary/{type}
             Method: GET
-      Environment: 
+      Environment:
         Variables:
           PARAM1: VALUE
-          REGION: '{{resolve:ssm:/covid19/DbRegion:1}}'
-          DYNAMODB_ENDPOINT: '{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}'
+          REGION: "{{resolve:ssm:/covid19/DbRegion:1}}"
+          DYNAMODB_ENDPOINT: "{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}"
   UserPreferencesFunction:
-    Type: AWS::Serverless::Function 
+    Type: AWS::Serverless::Function
     Properties:
       CodeUri: preferences/
       Handler: preferences
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        GetPreference:
+          Type: Api
+          Properties:
+            Path: /userservice/preferences/{user}/{key}
+            Method: GET
+        PostPreference:
+          Type: Api
+          Properties:
+            Path: /userservice/preferences/{user}/{key}
+            Method: POST
+      Environment:
+        Variables:
+          REGION: "{{resolve:ssm:/covid19/DbRegion:1}}"
+          DYNAMODB_ENDPOINT: "{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}"
+
+  RegionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: region/
+      Handler: region
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        GetPreference:
+          Type: Api
+          Properties:
+            Path: /regions
+            Method: GET
+      Environment:
+        Variables:
+          REGION: "{{resolve:ssm:/covid19/DbRegion:1}}"
+          DYNAMODB_ENDPOINT: "{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}"
+
+  Covid19DataFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: covid19data/
+      Handler: covid19data
       Runtime: go1.x
       Tracing: Active 
       Events:
         GetPreference:
           Type: Api 
           Properties:
-            Path: /userservice/preferences/{user}/{key}
+            Path: /covid19data/{type}/{region}
             Method: GET
-        PostPreference:
-          Type: Api 
-          Properties:
-            Path: /userservice/preferences/{user}/{key}
-            Method: POST
       Environment: 
         Variables:
           REGION: '{{resolve:ssm:/covid19/DbRegion:1}}'
-          DYNAMODB_ENDPOINT: '{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}'        
+          DYNAMODB_ENDPOINT: '{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}' 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM

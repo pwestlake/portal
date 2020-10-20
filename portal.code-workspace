@@ -8,6 +8,12 @@
 		},
 		{
 			"path": "lambda/covid19/preferences"
+		},
+		{
+			"path": "lambda/covid19/region"
+		},
+		{
+			"path": "lambda/covid19/covid19data"
 		}
 	]
 }
