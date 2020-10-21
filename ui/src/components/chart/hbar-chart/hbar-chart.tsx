@@ -13,7 +13,9 @@ const HBarChart = (props: HbarChartProps) => {
     const theme = useTheme();
 
     useEffect(() => {
-        drawHBarChart(props, ref.current, theme);
+        if (props.data.length > 0) {
+            drawHBarChart(props, ref.current, theme);
+        }
     }, [props, ref, theme]);
 
     return (
