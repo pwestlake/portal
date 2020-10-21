@@ -3,6 +3,7 @@ import './covid19-view.css';
 import { Box, Typography, AppBar, Tabs, Tab, Paper } from "@material-ui/core";
 import { SummaryTab } from "./summary-tab";
 import { CountryTab } from "./country-tab";
+import DataTab from "./data-tab";
 
 interface Covid19ViewState {
   tab: number;
@@ -72,7 +73,7 @@ export class Covid19View extends React.Component<Covid19ViewProps, Covid19ViewSt
           <Tab label="Topic" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <Paper square={true}>
+      <Paper square={true} style={{width: "100vw", height: "calc(100vh - 112px)", overflow: "scroll"}}>
         <TabPanel value={this.state.tab} index={0}>
           <SummaryTab />
         </TabPanel>
@@ -80,7 +81,7 @@ export class Covid19View extends React.Component<Covid19ViewProps, Covid19ViewSt
           <CountryTab />  
         </TabPanel>
         <TabPanel value={this.state.tab} index={2}>
-        <Typography>Item Two</Typography>
+          <DataTab />
         </TabPanel>
         <TabPanel value={this.state.tab} index={3}>
         <Typography>Item Two</Typography>

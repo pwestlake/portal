@@ -180,6 +180,7 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
         height: '100%',
       },
       mainConent: {
+        height: '100%',
         flexGrow: 1,
       },
       title: {

@@ -13,9 +13,12 @@ const drawHBarChart = (props: DateValueChartProps, element: HTMLDivElement | nul
     const width = props.width - margin.left - margin.right;
     const height = props.height - margin.top - margin.bottom;
 
-    const svg = d3.select(element).append('svg')
+    const div = d3.select(element);
+    div.selectAll("*").remove();
+    const svg = div.append('svg')
         .attr('width', props.width)
         .attr('height', props.height);
+    
 
     let startDate = new Date(data[0].date);
     let endDate = new Date(data[data.length - 1].date);
