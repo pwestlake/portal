@@ -131,8 +131,7 @@ export class SummaryTab extends React.Component<SummaryTabProps, SummaryTabState
                     <Grid item>
                         <IconButton aria-label="settings button" 
                             edge="end" 
-                            color="inherit" 
-                            style={{pointerEvents: "auto"}}
+                            style={{pointerEvents: "auto",  color: "white"}}
                             onClick={() => this.openSettingsPanel()}>
                             <Icon>settings</Icon>
                         </IconButton>

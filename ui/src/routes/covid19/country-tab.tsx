@@ -7,10 +7,11 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import DateValueChart from "../../components/chart/date-value/date-value";
-import { IconButton, Icon } from "@material-ui/core";
+import { IconButton, Icon, Drawer } from "@material-ui/core";
+import CountrySearch from "./country-search";
 
 interface CountryTabProps {
-
+    regions: string[];
 }
 
 interface CountryTabState {
@@ -22,6 +23,7 @@ interface CountryTabState {
     };
     region: string;
     display: CardType;
+    searchPanelOpen: boolean;
 }
 
 enum CardType {
@@ -42,6 +44,7 @@ export class CountryTab extends React.Component<CountryTabProps, CountryTabState
             },
             region: 'United_Kingdom',
             display: CardType.All,
+            searchPanelOpen: false
         };
     }
 
@@ -56,21 +59,7 @@ export class CountryTab extends React.Component<CountryTabProps, CountryTabState
     }
 
     async componentDidMount() {
-        let sessionObject = await Auth.currentSession();
-        let casesPath = "covid19data/cases";
-        let deathsPath = "covid19data/deaths";
-        let idToken = sessionObject.getIdToken().getJwtToken();
-        let init = {
-            response: true,
-            headers: { Authorization: idToken }
-        }
-        API.get('covid19', casesPath + "/" + this.state.region, init)
-            .then(response => {
-                this.setState({cases: response.data as DateValueModel[]});
-            })
-            .catch(error => {
-                console.log(error.response);
-            });
+        await this.fetchData();
         
         this.resizeObserver = new ResizeObserver((entries) => {
             this.setState({
@@ -84,8 +73,46 @@ export class CountryTab extends React.Component<CountryTabProps, CountryTabState
         this.resizeObserver.observe(this.refCases!);
     }
     
+    private async fetchData() {
+        let sessionObject = await Auth.currentSession();
+        let casesPath = "covid19data/cases";
+        let deathsPath = "covid19data/deaths";
+        let idToken = sessionObject.getIdToken().getJwtToken();
+        let init = {
+            response: true,
+            headers: { Authorization: idToken }
+        };
+        API.get('covid19', casesPath + "/" + this.state.region, init)
+            .then(response => {
+                this.setState({ cases: response.data as DateValueModel[] });
+            })
+            .catch(error => {
+                console.log(error.response);
+            });
+    }
+
     componentWillUnmount() {
         this.resizeObserver?.disconnect();
+    }
+    
+    openSearchPanel = () => {
+        this.setState({
+            searchPanelOpen: true
+        });
+    }
+
+    closeSearchPanel = () => {
+        this.setState({
+            searchPanelOpen: false
+        });
+    }
+
+    onCountryChanged = (value) => {
+        this.closeSearchPanel();
+        this.fetchData();
+        this.setState({
+            region: value
+        })
     }
     
     render() {
@@ -109,6 +136,27 @@ export class CountryTab extends React.Component<CountryTabProps, CountryTabState
             );
         return (
             <Grid container direction="column" spacing={3} ref={el => (this.refCases = el)}>
+                <Grid container 
+                    alignContent="center"
+                    justify="flex-end"
+                    direction="row" 
+                    spacing={2} 
+                    className="action-buttons">
+                    <Grid item>
+                        <IconButton aria-label="settings button" 
+                            edge="end"  
+                            style={{pointerEvents: "auto", color: "white"}}
+                            onClick={() => this.openSearchPanel()}>
+                            <Icon>search</Icon>
+                        </IconButton>
+                    </Grid>    
+                </Grid>
+                <Drawer anchor='right' 
+                    open={this.state.searchPanelOpen} 
+                    variant="temporary">
+                    <CountrySearch regions={this.props.regions} 
+                        onChange={this.onCountryChanged} onClose={this.closeSearchPanel}/>
+                </Drawer>
                 {(display === CardType.All || display === CardType.Cases) &&
                 <Grid item xs={12}>
                     <Card>

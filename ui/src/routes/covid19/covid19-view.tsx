@@ -4,9 +4,11 @@ import { Box, Typography, AppBar, Tabs, Tab, Paper } from "@material-ui/core";
 import { SummaryTab } from "./summary-tab";
 import { CountryTab } from "./country-tab";
 import DataTab from "./data-tab";
+import { Auth, API } from "aws-amplify";
 
 interface Covid19ViewState {
   tab: number;
+  regions: string[];
 }
 
 interface Covid19ViewProps {
@@ -52,7 +54,25 @@ export class Covid19View extends React.Component<Covid19ViewProps, Covid19ViewSt
     super(props);
     this.state = {
       tab: 0,
+      regions: []
     };
+  }
+
+  async componentDidMount() {
+    let sessionObject = await Auth.currentSession();
+    let path = "/regions";
+    let idToken = sessionObject.getIdToken().getJwtToken();
+    let init = {
+        response: true,
+        headers: { Authorization: idToken },
+    };
+    API.get('covid19', path, init)
+        .then(response => {
+            this.setState({ regions: response.data as string[] });
+        })
+        .catch(error => {
+            console.log(error.response);
+        });
   }
 
   tabChanged = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -78,7 +98,7 @@ export class Covid19View extends React.Component<Covid19ViewProps, Covid19ViewSt
           <SummaryTab />
         </TabPanel>
         <TabPanel value={this.state.tab} index={1}>
-          <CountryTab />  
+          <CountryTab regions={this.state.regions}/>  
         </TabPanel>
         <TabPanel value={this.state.tab} index={2}>
           <DataTab />
