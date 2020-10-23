@@ -1,9 +1,10 @@
 import React from "react";
-import { Grid, Card, CardHeader, CardContent } from "@material-ui/core";
+import { Grid, Card, CardHeader, CardContent, IconButton, Icon, Drawer } from "@material-ui/core";
 import { API, Auth } from "aws-amplify";
 import { KeyValueModel } from "../../models/keyvalue";
 import HBarChart from "../../components/chart/hbar-chart/hbar-chart";
 import { ResizeObserver } from 'resize-observer';
+import Settings from "./settings";
 
 interface SummaryTabState {
     cases: KeyValueModel[];
@@ -12,6 +13,9 @@ interface SummaryTabState {
         height: number;
         width: number;
     };
+    settingsPanelOpen: boolean;
+    perCapita: boolean;
+    multiplier: number;
 }
   
 interface SummaryTabProps {
@@ -27,7 +31,10 @@ export class SummaryTab extends React.Component<SummaryTabProps, SummaryTabState
           dimension: {
               height: 0,
               width: 0
-          }
+          },
+          settingsPanelOpen: false,
+        perCapita: false,
+        multiplier: 100000
       };
     }
 
@@ -35,29 +42,7 @@ export class SummaryTab extends React.Component<SummaryTabProps, SummaryTabState
     resizeObserver: ResizeObserver | null = null;
 
     async componentDidMount() {
-        let sessionObject = await Auth.currentSession();
-        let casesPath = "summary/all-covid-cases";
-        let deathsPath = "summary/all-covid-deaths";
-        let idToken = sessionObject.getIdToken().getJwtToken();
-        let init = {
-            response: true,
-            headers: { Authorization: idToken }
-        }
-        API.get('covid19', casesPath, init)
-            .then(response => {
-                this.setState({cases: response.data as KeyValueModel[]});
-            })
-            .catch(error => {
-                console.log(error.response);
-            });
-
-        API.get('covid19', deathsPath, init)
-            .then(response => {
-                this.setState({deaths: response.data as KeyValueModel[]});
-            })
-            .catch(error => {
-                console.log(error.response);
-            });
+        await this.fetchData();
         
         this.resizeObserver = new ResizeObserver((entries) => {
             this.setState({
@@ -71,13 +56,97 @@ export class SummaryTab extends React.Component<SummaryTabProps, SummaryTabState
         this.resizeObserver.observe(this.ref!);
     }
     
+    private async fetchData() {
+        let sessionObject = await Auth.currentSession();
+        let casesPath = "summary/all-covid-cases";
+        let deathsPath = "summary/all-covid-deaths";
+        let idToken = sessionObject.getIdToken().getJwtToken();
+        let init = {
+            response: true,
+            headers: { Authorization: idToken },
+            queryStringParameters: {
+                perCapita: this.state.perCapita,
+                multiplier: this.state.multiplier
+            }
+        };
+        API.get('covid19', casesPath, init)
+            .then(response => {
+                this.setState({ cases: response.data as KeyValueModel[] });
+            })
+            .catch(error => {
+                console.log(error.response);
+            });
+
+        API.get('covid19', deathsPath, init)
+            .then(response => {
+                this.setState({ deaths: response.data as KeyValueModel[] });
+            })
+            .catch(error => {
+                console.log(error.response);
+            });
+    }
+
+    componentDidUpdate() {
+    }
+
     componentWillUnmount() {
         this.resizeObserver?.disconnect();
     }
-    
+
+    openSettingsPanel = () => {
+        this.setState({
+            settingsPanelOpen: true
+        });
+    }
+
+    closeSettingsPanel = () => {
+        this.setState({
+            settingsPanelOpen: false
+        });
+    }
+
+    perCapitaChanged = (value) => {
+        this.fetchData();
+        this.setState({
+            perCapita: value
+        })
+    }
+
+    multiplierChanged = (value) => {
+        this.fetchData();
+        this.setState({
+            multiplier: value
+        })
+    }
+
     render() {
         return (
             <Grid container direction="column" spacing={3}>
+                <Grid container 
+                    alignContent="center"
+                    justify="flex-end"
+                    direction="row" 
+                    spacing={2} 
+                    className="action-buttons">
+                    <Grid item>
+                        <IconButton aria-label="settings button" 
+                            edge="end" 
+                            color="inherit" 
+                            style={{pointerEvents: "auto"}}
+                            onClick={() => this.openSettingsPanel()}>
+                            <Icon>settings</Icon>
+                        </IconButton>
+                    </Grid>    
+                </Grid>
+                <Drawer anchor='right' 
+                    open={this.state.settingsPanelOpen} 
+                    variant="temporary">
+                    <Settings onClose={() => this.closeSettingsPanel()} 
+                        perCapita={this.state.perCapita}
+                        multiplier={this.state.multiplier}
+                        onPerCapitaChange={this.perCapitaChanged}
+                        onMultiplierChange={this.multiplierChanged}/>
+                </Drawer>
                 <Grid item xs={12}>
                     <Card>
                         <CardHeader title="Total Cases">

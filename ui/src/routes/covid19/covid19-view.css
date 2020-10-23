@@ -8,3 +8,11 @@
     height: 600px;
 }
 
+.action-buttons {
+    position: fixed; 
+    top: 64px;
+    left: 0px;
+    height: 48px; 
+    pointer-events: none; 
+    padding-right: 24px;
+}

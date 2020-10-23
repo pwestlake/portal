@@ -8,7 +8,6 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import DateValueChart from "../../components/chart/date-value/date-value";
 import { IconButton, Icon } from "@material-ui/core";
-import MoreIcon from '@material-ui/icons/PinDrop';
 
 interface CountryTabProps {
 
@@ -46,7 +45,8 @@ export class CountryTab extends React.Component<CountryTabProps, CountryTabState
         };
     }
 
-    ref: HTMLDivElement | null = null; 
+    refCases: HTMLDivElement | null = null; 
+    refDeaths: HTMLDivElement | null = null; 
     resizeObserver: ResizeObserver | null = null;
     
     pinCard = (type: CardType) => {
@@ -75,13 +75,13 @@ export class CountryTab extends React.Component<CountryTabProps, CountryTabState
         this.resizeObserver = new ResizeObserver((entries) => {
             this.setState({
                 dimension: {
-                    width: this.ref!.getBoundingClientRect().width,
-                    height: this.ref!.getBoundingClientRect().height,
+                    width: this.refCases!.getBoundingClientRect().width - 24 - 32,
+                    height: this.refCases!.getBoundingClientRect().height - 24 - 32 - 72,
                 }
             });
         });
         
-        this.resizeObserver.observe(this.ref!);
+        this.resizeObserver.observe(this.refCases!);
     }
     
     componentWillUnmount() {
@@ -90,24 +90,36 @@ export class CountryTab extends React.Component<CountryTabProps, CountryTabState
     
     render() {
         const display: CardType = this.state.display;
-        
+        const pinCases =  (
+            <IconButton aria-label="pin" onClick={() => this.pinCard(CardType.Cases)}>
+                <Icon>push_pin</Icon>
+            </IconButton>
+            );
+
+        const pinDeaths =  (
+            <IconButton aria-label="pin" onClick={() => this.pinCard(CardType.Deaths)}>
+                <Icon>push_pin</Icon>
+            </IconButton>
+            );
+
+        const unPin =  (
+            <IconButton aria-label="un pin" onClick={() => this.pinCard(CardType.All)}>
+                <Icon>view_agenda</Icon>
+            </IconButton>
+            );
         return (
-            <Grid container direction="column" spacing={3}>
+            <Grid container direction="column" spacing={3} ref={el => (this.refCases = el)}>
                 {(display === CardType.All || display === CardType.Cases) &&
                 <Grid item xs={12}>
                     <Card>
                         <CardHeader title="Total Cases"
-                        action={
-                            <IconButton aria-label="pin" onClick={() => this.pinCard(CardType.Cases)}>
-                              <Icon>push_pin</Icon>
-                            </IconButton>
-                          }> 
+                            action={(display === CardType.All) ? pinCases : unPin}> 
                         </CardHeader>
-                        <CardContent style={display === CardType.All ? {height: "300px"} : {height: "calc(100vh - 224px)"}}>
-                            <div style={{height: "100%", width: "100%"}} ref={el => (this.ref = el)}>
+                        <CardContent style={display === CardType.All ? {height: "300px"} : {height: "calc(100vh - 256px)"}}>
+                            <div style={{height: "100%", width: "100%"}}>
                                 <DateValueChart data={this.state.cases} 
                                     width={this.state.dimension.width} 
-                                    height={this.state.dimension.height}/>
+                                    height={display === CardType.All ? 300 : this.state.dimension.height}/>
                             </div>
                         </CardContent>
                     </Card>
@@ -116,17 +128,19 @@ export class CountryTab extends React.Component<CountryTabProps, CountryTabState
                 {(display === CardType.All || display === CardType.Deaths) &&
                 <Grid item xs={12}>
                     <Card>
-                        <CardHeader title="Total Deaths">
+                        <CardHeader title="Total Deaths"
+                            action={(display === CardType.All) ? pinDeaths : unPin}> 
                             
                         </CardHeader>
-                        <CardContent style={{height: "300px"}}>
-                            <div style={{height: "100%", width: "100%"}} ref={el => (this.ref = el)}>
-                                <DateValueChart data={this.state.cases} width={this.state.dimension.width} height={this.state.dimension.height}/>
+                        <CardContent style={display === CardType.All ? {height: "300px"} : {height: "calc(100vh - 256px)"}}>
+                            <div style={{height: "100%", width: "100%"}}>
+                                <DateValueChart data={this.state.cases} 
+                                    width={this.state.dimension.width} 
+                                    height={display === CardType.All ? 300 : this.state.dimension.height}/>
                             </div>
                         </CardContent>
                     </Card>
                 </Grid>}
             </Grid>
-        );
-    }
+        )}
 }

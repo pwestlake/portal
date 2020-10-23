@@ -145,9 +145,6 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
-        height: '100%',
-        display: 'flex',
-        flexGrow: 1,
       },
       appBar: {
         transition: theme.transitions.create(['margin', 'width'], {
@@ -224,7 +221,7 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
   return (
     <MuiThemeProvider theme={theme}>
       <div className={classes.root}>
-        <Grid container direction="column" alignItems="stretch" className={classes.mainGrid}>
+        <Grid container direction="column" className={classes.mainGrid}>
           <Grid item xs={12}>
             <AppBar position="static" elevation={0} className={classes.appBar}>
               <Toolbar>
@@ -253,7 +250,7 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
               </Toolbar>
             </AppBar>
 
-            <Grid container direction="row" alignItems="stretch" className={classes.mainConent}>
+            <Grid container direction="row" className={classes.mainConent}>
               <Drawer className={classes.drawer} anchor='left' open={state} onClick={toggleDrawer(false)}
                 variant="temporary" classes={{
                   paper: classes.drawerPaper,
