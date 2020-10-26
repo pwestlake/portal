@@ -17,6 +17,27 @@ import (
 func HandleCases(regionName string, 
 	headers map[string]string,
 	covid19DataService service.Covid19DataServiceInterface) (events.APIGatewayProxyResponse, error) {
+	
+	return handleCasesForRegion(regionName, headers, covid19DataService, func(s domain.Covid19DataItem) int {
+		return s.NewConfCases
+	})
+}
+
+// HandleDeaths ...
+// Handler function for the covid19data/deaths/{region} endpoint
+func HandleDeaths(regionName string, 
+	headers map[string]string,
+	covid19DataService service.Covid19DataServiceInterface) (events.APIGatewayProxyResponse, error) {
+	
+	return handleCasesForRegion(regionName, headers, covid19DataService, func(s domain.Covid19DataItem) int {
+		return s.NewDeaths
+	})
+}
+
+func handleCasesForRegion(regionName string, 
+	headers map[string]string,
+	covid19DataService service.Covid19DataServiceInterface,
+	getValue func(s domain.Covid19DataItem) int) (events.APIGatewayProxyResponse, error){
 	covid19DataItems, err := covid19DataService.GetDataForRegion(regionName)
 	
 	if err != nil {
@@ -39,7 +60,7 @@ func HandleCases(regionName string,
 		}
 
 		if (date.After(min) || date.Equal(min)) && (date.Before(max) || date.Equal(max)) {
-			dateValues = append(dateValues, domain.DateValue{Date: date, Value: v.NewConfCases})
+			dateValues = append(dateValues, domain.DateValue{Date: date, Value: getValue(v)})
 		}
 	}
 

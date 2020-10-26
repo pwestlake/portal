@@ -24,6 +24,8 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	switch pathParams["type"] {
 	case "cases": 
 		return hdlr.HandleCases(pathParams["region"], headers, covid19DataService)
+	case "deaths":
+		return hdlr.HandleDeaths(pathParams["region"], headers, covid19DataService)
 	default:
 		log.Printf("Invalid request")
 	}
