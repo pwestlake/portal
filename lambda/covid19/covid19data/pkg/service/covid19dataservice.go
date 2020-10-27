@@ -10,6 +10,7 @@ import (
 // Covid19DataService interface
 type Covid19DataServiceInterface interface {
 	GetDataForRegion(regionName string) (*[]domain.Covid19DataItem, error)
+	GetAllCovidItems(count int, key string, sortKey string, region string) (*[]domain.Covid19DataItem, error)
 }
 
 // Covid19DataService ...
@@ -25,4 +26,15 @@ func NewCovid19DataService(covid19DataDao db.Covid19DataDao) Covid19DataServiceI
 
 func (s *covid19DataService) GetDataForRegion(regionName string) (*[]domain.Covid19DataItem, error) {
 	return s.covid19DataDao.GetDataForRegion(regionName)
+}
+
+func (s *covid19DataService) GetAllCovidItems(count int, key string, sortKey string, region string) (*[]domain.Covid19DataItem, error) {
+	var from *domain.Covid19DataItem = nil
+	if key != "" && sortKey != "" {
+		from = &domain.Covid19DataItem{
+			CountryExp: key,
+			DateRep: sortKey,
+		}
+	}
+	return s.covid19DataDao.GetAllCovidItems(count, from, region)
 }

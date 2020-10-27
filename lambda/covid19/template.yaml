@@ -119,10 +119,15 @@ Resources:
       Runtime: go1.x
       Tracing: Active 
       Events:
-        GetPreference:
+        GetCases:
           Type: Api 
           Properties:
             Path: /covid19data/{type}/{region}
+            Method: GET
+        GetAll:
+          Type: Api 
+          Properties:
+            Path: /covid19data/{type}
             Method: GET
       Environment: 
         Variables:

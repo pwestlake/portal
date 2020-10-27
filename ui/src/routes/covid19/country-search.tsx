@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { TextField } from "@material-ui/core";
+import React from "react";
+import { Box, Button, Grid, TextField } from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 export interface CountrySearchProps {
@@ -9,25 +9,34 @@ export interface CountrySearchProps {
 }
 
 const CountrySearch = (props: CountrySearchProps) => {
-    useEffect(() => {
-        console.log("Load");
-    }, []);
     
     const handleChange = (e, v) => {
         props.onChange(v);
     }
 
     return (
-        <div style={{paddingTop: "32px", paddingLeft: "16px", paddingRight: "16px"}}>
-            <Autocomplete
-                id="country-selector"
-                options={props.regions}
-                onChange={handleChange}
-                getOptionLabel={(option) => option}
-                style={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} placeholder="Region" />}
-                />
-        </div>
+        <Box p={2}>
+            <Grid container direction="column" justify="space-between" alignItems="center">
+                <Grid item xs={12}> 
+                    <div style={{paddingTop: "32px"}}>
+                        <Autocomplete
+                            id="country-selector"
+                            options={props.regions}
+                            onChange={handleChange}
+                            getOptionLabel={(option) => option}
+                            style={{ width: 300 }}
+                            renderInput={(params) => <TextField {...params} placeholder="Region" />}
+                            />
+                    </div>
+                </Grid>
+                <Grid container direction="row" justify="flex-end" style={{paddingTop: "96px"}}>
+                    <Grid item>
+                        <Button variant="contained" color="primary" onClick={props.onClose}>Close</Button>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Box>
+        
     );
 }
 

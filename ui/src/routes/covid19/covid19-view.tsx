@@ -1,6 +1,6 @@
 import React from "react";
 import './covid19-view.css';
-import { Box, Typography, AppBar, Tabs, Tab, Paper } from "@material-ui/core";
+import { Typography, AppBar, Tabs, Tab, Paper } from "@material-ui/core";
 import { SummaryTab } from "./summary-tab";
 import { CountryTab } from "./country-tab";
 import DataTab from "./data-tab";
@@ -32,9 +32,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box p={2}>
-          <div>{children}</div>
-        </Box>
+          <div style={{height: "calc(100vh - 112px"}}>{children}</div>
       )}
     </div>
   );
@@ -101,7 +99,7 @@ export class Covid19View extends React.Component<Covid19ViewProps, Covid19ViewSt
           <CountryTab regions={this.state.regions}/>  
         </TabPanel>
         <TabPanel value={this.state.tab} index={2}>
-          <DataTab />
+          <DataTab regions={this.state.regions}/>
         </TabPanel>
         <TabPanel value={this.state.tab} index={3}>
         <Typography>Item Two</Typography>

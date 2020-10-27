@@ -7,7 +7,7 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import DateValueChart from "../../components/chart/date-value/date-value";
-import { IconButton, Icon, Drawer } from "@material-ui/core";
+import { IconButton, Icon, Drawer, Box } from "@material-ui/core";
 import CountrySearch from "./country-search";
 
 interface CountryTabProps {
@@ -64,13 +64,13 @@ export class CountryTab extends React.Component<CountryTabProps, CountryTabState
         this.resizeObserver = new ResizeObserver((entries) => {
             this.setState({
                 dimension: {
-                    width: this.refCases!.getBoundingClientRect().width - 24 - 32,
-                    height: this.refCases!.getBoundingClientRect().height - 24 - 32 - 72,
+                    width: this.refCases.getBoundingClientRect().width - 24 - 32,
+                    height: this.refCases.getBoundingClientRect().height - 24 - 32 - 72,
                 }
             });
         });
         
-        this.resizeObserver.observe(this.refCases!);
+        this.resizeObserver.observe(this.refCases);
     }
     
     private async fetchData() {
@@ -143,60 +143,62 @@ export class CountryTab extends React.Component<CountryTabProps, CountryTabState
             </IconButton>
             );
         return (
-            <Grid container direction="column" spacing={3} ref={el => (this.refCases = el)}>
-                <Grid container 
-                    alignContent="center"
-                    justify="flex-end"
-                    direction="row" 
-                    spacing={2} 
-                    className="action-buttons">
-                    <Grid item>
-                        <IconButton aria-label="settings button" 
-                            edge="end"  
-                            style={{pointerEvents: "auto", color: "white"}}
-                            onClick={() => this.openSearchPanel()}>
-                            <Icon>search</Icon>
-                        </IconButton>
-                    </Grid>    
+            <Box p={2}>
+                <Grid container direction="column" spacing={3} ref={el => (this.refCases = el)}>
+                    <Grid container 
+                        alignContent="center"
+                        justify="flex-end"
+                        direction="row" 
+                        spacing={2} 
+                        className="action-buttons">
+                        <Grid item>
+                            <IconButton aria-label="settings button" 
+                                edge="end"  
+                                style={{pointerEvents: "auto", color: "white"}}
+                                onClick={() => this.openSearchPanel()}>
+                                <Icon>search</Icon>
+                            </IconButton>
+                        </Grid>    
+                    </Grid>
+                    <Drawer anchor='right' 
+                        open={this.state.searchPanelOpen} 
+                        variant="temporary">
+                        <CountrySearch regions={this.props.regions} 
+                            onChange={this.onCountryChanged} onClose={this.closeSearchPanel}/>
+                    </Drawer>
+                    {(display === CardType.All || display === CardType.Cases) &&
+                    <Grid item xs={12}>
+                        <Card>
+                            <CardHeader title="Total Cases"
+                                action={(display === CardType.All) ? pinCases : unPin}> 
+                            </CardHeader>
+                            <CardContent style={display === CardType.All ? {height: "300px"} : {height: "calc(100vh - 256px)"}}>
+                                <div style={{height: "100%", width: "100%"}}>
+                                    <DateValueChart data={this.state.cases} 
+                                        width={this.state.dimension.width} 
+                                        height={display === CardType.All ? 300 : this.state.dimension.height}/>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </Grid>}
+                
+                    {(display === CardType.All || display === CardType.Deaths) &&
+                    <Grid item xs={12}>
+                        <Card>
+                            <CardHeader title="Total Deaths"
+                                action={(display === CardType.All) ? pinDeaths : unPin}> 
+                                
+                            </CardHeader>
+                            <CardContent style={display === CardType.All ? {height: "300px"} : {height: "calc(100vh - 256px)"}}>
+                                <div style={{height: "100%", width: "100%"}}>
+                                    <DateValueChart data={this.state.deaths} 
+                                        width={this.state.dimension.width} 
+                                        height={display === CardType.All ? 300 : this.state.dimension.height}/>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </Grid>}
                 </Grid>
-                <Drawer anchor='right' 
-                    open={this.state.searchPanelOpen} 
-                    variant="temporary">
-                    <CountrySearch regions={this.props.regions} 
-                        onChange={this.onCountryChanged} onClose={this.closeSearchPanel}/>
-                </Drawer>
-                {(display === CardType.All || display === CardType.Cases) &&
-                <Grid item xs={12}>
-                    <Card>
-                        <CardHeader title="Total Cases"
-                            action={(display === CardType.All) ? pinCases : unPin}> 
-                        </CardHeader>
-                        <CardContent style={display === CardType.All ? {height: "300px"} : {height: "calc(100vh - 256px)"}}>
-                            <div style={{height: "100%", width: "100%"}}>
-                                <DateValueChart data={this.state.cases} 
-                                    width={this.state.dimension.width} 
-                                    height={display === CardType.All ? 300 : this.state.dimension.height}/>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </Grid>}
-            
-                {(display === CardType.All || display === CardType.Deaths) &&
-                <Grid item xs={12}>
-                    <Card>
-                        <CardHeader title="Total Deaths"
-                            action={(display === CardType.All) ? pinDeaths : unPin}> 
-                            
-                        </CardHeader>
-                        <CardContent style={display === CardType.All ? {height: "300px"} : {height: "calc(100vh - 256px)"}}>
-                            <div style={{height: "100%", width: "100%"}}>
-                                <DateValueChart data={this.state.deaths} 
-                                    width={this.state.dimension.width} 
-                                    height={display === CardType.All ? 300 : this.state.dimension.height}/>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </Grid>}
-            </Grid>
+            </Box>
         )}
 }

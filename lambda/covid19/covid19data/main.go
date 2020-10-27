@@ -12,6 +12,8 @@ import (
 
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	pathParams := request.PathParameters
+	queryParams := request.QueryStringParameters
+
 	headers := map[string]string{
 		"Access-Control-Allow-Origin": "*", 
 		"Access-Control-Allow-Methods": "GET",
@@ -26,6 +28,8 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return hdlr.HandleCases(pathParams["region"], headers, covid19DataService)
 	case "deaths":
 		return hdlr.HandleDeaths(pathParams["region"], headers, covid19DataService)
+	case "all":
+		return hdlr.HandleAll(queryParams, headers, covid19DataService)
 	default:
 		log.Printf("Invalid request")
 	}
