@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "lambda/covid19/summary"
+		},
+		{
+			"path": "ui"
+		},
+		{
+			"path": "lambda/covid19/preferences"
+		},
+		{
+			"path": "lambda/covid19/region"
+		},
+		{
+			"path": "lambda/covid19/covid19data"
+		},
+		{
+			"path": "lambda/covid19/covid19update"
+		}
+	]
+}
