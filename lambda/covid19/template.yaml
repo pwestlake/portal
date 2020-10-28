@@ -112,27 +112,47 @@ Resources:
           DYNAMODB_ENDPOINT: "{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}"
 
   Covid19DataFunction:
-    Type: AWS::Serverless::Function 
+    Type: AWS::Serverless::Function
     Properties:
       CodeUri: covid19data/
       Handler: covid19data
       Runtime: go1.x
-      Tracing: Active 
+      Tracing: Active
       Events:
         GetCases:
-          Type: Api 
+          Type: Api
           Properties:
             Path: /covid19data/{type}/{region}
             Method: GET
         GetAll:
-          Type: Api 
+          Type: Api
           Properties:
             Path: /covid19data/{type}
             Method: GET
-      Environment: 
+      Environment:
         Variables:
-          REGION: '{{resolve:ssm:/covid19/DbRegion:1}}'
-          DYNAMODB_ENDPOINT: '{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}' 
+          REGION: "{{resolve:ssm:/covid19/DbRegion:1}}"
+          DYNAMODB_ENDPOINT: "{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}"
+
+  Covid19UpdateFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: covid19update/
+      Handler: covid19update
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        Trigger:
+          Type: Schedule
+          Properties:
+            Schedule: "rate(10 minutes)"
+            Name: Covid19UpdateSchedule
+            Description: covid-19 update schedule
+            Enabled: False
+      Environment:
+        Variables:
+          REGION: "{{resolve:ssm:/covid19/DbRegion:1}}"
+          DYNAMODB_ENDPOINT: "{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}"
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM

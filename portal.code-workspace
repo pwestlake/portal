@@ -14,6 +14,9 @@
 		},
 		{
 			"path": "lambda/covid19/covid19data"
+		},
+		{
+			"path": "lambda/covid19/covid19update"
 		}
 	]
 }
