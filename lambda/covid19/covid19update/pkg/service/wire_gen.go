@@ -16,15 +16,17 @@ import (
 func InitializeCovid19DataService() Covid19DataServiceInterface {
 	covid19DataDao := db.NewCovid19DataDao()
 	extractLogItemDao := db.NewExtractLogItemDao()
-	covid19DataServiceInterface := NewCovid19DataService(covid19DataDao, extractLogItemDao)
+	covid19SummaryItemDao := db.NewCovid19SummaryItemDao()
+	covid19DataServiceInterface := NewCovid19DataService(covid19DataDao, extractLogItemDao, covid19SummaryItemDao)
 	return covid19DataServiceInterface
 }
 
 // wire.go:
 
 type dummyService struct {
-	covid19DataDao    db.Covid19DataDao
-	extractLogItemDao db.ExtractLogItemDao
+	covid19DataDao        db.Covid19DataDao
+	extractLogItemDao     db.ExtractLogItemDao
+	covid19SummaryItemDao db.Covid19SummaryItemDao
 }
 
 func (s *dummyService) AddToExtractLogItems(item domain.ExtractLogItem) error {
@@ -33,4 +35,16 @@ func (s *dummyService) AddToExtractLogItems(item domain.ExtractLogItem) error {
 
 func (s *dummyService) GetExtractLogItemsForExtractDate(date time.Time) (*[]domain.ExtractLogItem, error) {
 	return nil, nil
+}
+
+func (s *dummyService) PersistData(data *[]domain.Covid19DataItem) (int, error) {
+	return 0, nil
+}
+
+func (s *dummyService) SourceDataFromJSON() (*[]domain.Covid19DataItem, error) {
+	return nil, nil
+}
+
+func (s *dummyService) PersistSummaryData(data *[]domain.Covid19DataItem) (int, error) {
+	return 0, nil
 }

@@ -8,14 +8,14 @@ import (
 	"testing"
 )
 
-func SaveItem(t *testing.T) {
-	os.Setenv("DYNAMODB_ENDPOINT", "")
-	os.Setenv("REGION", "")
+func TestSaveItem(t *testing.T) {
+	os.Setenv("DYNAMODB_ENDPOINT", "https://dynamodb.eu-west-2.amazonaws.com")
+	os.Setenv("REGION", "eu-west-2")
 
 	dao := NewExtractLogItemDao()
 	item := domain.ExtractLogItem {
-		ExtractDate: "20060401",
-		ItemCountInserted: 24,
+		ExtractDate: "20201029",
+		ItemCountInserted: 212,
 	}
 	err := dao.SaveItem(item)
 	if err != nil {
