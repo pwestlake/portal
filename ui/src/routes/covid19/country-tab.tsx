@@ -174,7 +174,7 @@ export class CountryTab extends React.Component<CountryTabProps, CountryTabState
                             </CardHeader>
                             <CardContent style={display === CardType.All ? {height: "300px"} : {height: "calc(100vh - 256px)"}}>
                                 <div style={{height: "100%", width: "100%"}}>
-                                    <DateValueChart data={this.state.cases} 
+                                    <DateValueChart id="cases" data={this.state.cases} 
                                         width={this.state.dimension.width} 
                                         height={display === CardType.All ? 300 : this.state.dimension.height}/>
                                 </div>
@@ -191,7 +191,7 @@ export class CountryTab extends React.Component<CountryTabProps, CountryTabState
                             </CardHeader>
                             <CardContent style={display === CardType.All ? {height: "300px"} : {height: "calc(100vh - 256px)"}}>
                                 <div style={{height: "100%", width: "100%"}}>
-                                    <DateValueChart data={this.state.deaths} 
+                                    <DateValueChart id="deaths" data={this.state.deaths} 
                                         width={this.state.dimension.width} 
                                         height={display === CardType.All ? 300 : this.state.dimension.height}/>
                                 </div>

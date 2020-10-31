@@ -5,24 +5,23 @@ import { DateValueModel } from '../../../models/datevalue';
 import * as d3 from 'd3';
 import './date-value.css';
 
-const drawHBarChart = (props: DateValueChartProps, element: HTMLDivElement | null, theme: Theme) => {
+const drawDateValueChart = (props: DateValueChartProps, element: HTMLDivElement | null, theme: Theme) => {
     const data = props.data;
     const average: [number, number][] = sevenDayRollingAverage(data);
     let maxY = undefined;
+    
     const margin = {top: 0, right: 16, bottom: 16, left: 40};
     const width = props.width - margin.left - margin.right;
     const height = props.height - margin.top - margin.bottom;
 
     const div = d3.select(element);
     div.selectAll("*").remove();
-    const svg = div.append('svg')
-        .attr('width', props.width)
-        .attr('height', props.height);
-    
 
+    
     let startDate = new Date(data[0].date);
     let endDate = new Date(data[data.length - 1].date);
 
+    
     const xLine = d3.scaleUtc()
         .domain(d3.extent(average, d => d[0]))
         .range([0, width])
@@ -63,6 +62,46 @@ const drawHBarChart = (props: DateValueChartProps, element: HTMLDivElement | nul
         .attr("class", "tooltip")
         .style("opacity", 0);
 
+    const updateRulerX = (e: Event): void => {
+            let coords : number[];
+            if (e instanceof TouchEvent) {
+                coords = [e.touches[0].clientX, e.touches[0].clientY];
+            }
+            if (e instanceof MouseEvent) {
+                coords = [e.clientX, e.clientY];
+            }
+            
+            let xSelection = d3.select("#" + props.id + " > g > path.x-measure");
+            let svg = d3.select("#" + props.id + " > g");
+            let svgElement = svg.node() as Element;
+            let minX = svgElement.getBoundingClientRect().x + margin.left;
+            let maxX = x((data.length - 1).toString());
+            let xNew = (coords[0] - minX) < 0 ? 0 : ((coords[0] - minX) > maxX ? maxX : (coords[0] - minX));
+            xSelection.attr('transform', `translate(${xNew}, 0)`);
+        }
+
+        const updateRulerY = (e: Event): void => {
+            let coords : number[];
+            if (e instanceof TouchEvent) {
+                coords = [e.touches[0].clientX, e.touches[0].clientY];
+            }
+            if (e instanceof MouseEvent) {
+                coords = [e.offsetX, e.offsetY];
+            }
+            
+            let ySelection = d3.select("#" + props.id + " > g > path.y-measure");
+            let minY = 0;
+            let maxY = y(0);
+            let yNew = (coords[1] - minY) < 0 ? 0 : ((coords[1] - minY) > maxY ? maxY : (coords[1] - minY));
+            ySelection.attr('transform', `translate(0, ${yNew - y(0)})`);
+        }
+    const svg = div.append('svg')
+        .attr('id', props.id)
+        .attr('width', props.width)
+        .attr('height', props.height)
+        .on('touchmove', (e: Event) => {updateRulerX(e); updateRulerY(e)})
+        .on('mousemove', (e: Event) => {updateRulerX(e); updateRulerY(e)});
+
     const g = svg.append('g')
         .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
@@ -99,10 +138,10 @@ const drawHBarChart = (props: DateValueChartProps, element: HTMLDivElement | nul
             let eunknown = e as unknown;
             let event = eunknown as MouseEvent;
             let dunknown = d as unknown;
-            let data = dunknown as DateValueModel;
+            let dataPoint = dunknown as DateValueModel;
             let coords = [event.clientX, event.clientY];
-            showTooltip(data, tooltip, svg, props.width, coords);
-        })//showTooltip(d, tooltip, svg, width))					
+            showTooltip(dataPoint, tooltip, svg, props.width, coords);
+        })					
         .on("mouseout", d => hideTooltip(tooltip));
 
     g.append("path")
@@ -119,15 +158,30 @@ const drawHBarChart = (props: DateValueChartProps, element: HTMLDivElement | nul
         .attr('transform', `translate(${x.bandwidth() / 2}, ${height})`)
         .call(d3.axisBottom(xAxis).ticks(5).tickFormat(d3.timeFormat("%b %d")));
 
-    let setHeightBarFn = (): void => { return this.setHeightBar(this); };
-    g.selectAll('.axis--x')
-        .attr('fill', 'transparent')
-        .on("click", setHeightBarFn);
+    // Y Measure
+    const yMeasure = d3.path();
+    yMeasure.moveTo(x("0"), y(0));
+    yMeasure.lineTo(x((data.length - 1).toString()), y(0));
+    g.append('path')
+        .attr("class", "y-measure")
+        .attr('stroke', 'lightgrey')
+        .attr('stroke-dasharray', '3, 3')
+        .attr('stroke-width', 1)
+        .attr('d', yMeasure.toString());
 
-    g.selectAll('.axis--y')
-        .attr('fill', 'transparent')
-        .on("click", function (d) { console.log(d); })
+    // X Measure
+    const xMeasure = d3.path();
+    xMeasure.moveTo(x("0"), 0);
+    xMeasure.lineTo(x("0"), y(0));
+    g.append('path')
+        .attr("class", "x-measure")
+        .attr('stroke', 'lightgrey')
+        .attr('stroke-dasharray', '3, 3')
+        .attr('stroke-width', 1)
+        .attr('d', xMeasure.toString());
 }
+
+
 
 function showTooltip(d: DateValueModel, 
     tooltip: any, svg: d3.Selection<SVGSVGElement, any, any, any>, 
@@ -177,4 +231,4 @@ function sevenDayRollingAverage(data: DateValueModel[]): [number, number][] {
     return result;
 }
 
-export default drawHBarChart;
+export default drawDateValueChart;
