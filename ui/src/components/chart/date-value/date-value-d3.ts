@@ -10,7 +10,9 @@ const drawDateValueChart = (props: DateValueChartProps, element: HTMLDivElement 
     const average: [number, number][] = sevenDayRollingAverage(data);
     let maxY = undefined;
 
-    const margin = { top: 0, right: 16, bottom: 16, left: 40 };
+    const margin = { top: 0, right: 16, bottom: 20, left: 47 };
+    const months : string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const xLabelWidth = 40;
     const width = props.width - margin.left - margin.right;
     const height = props.height - margin.top - margin.bottom;
 
@@ -58,11 +60,6 @@ const drawDateValueChart = (props: DateValueChartProps, element: HTMLDivElement 
             return d.value > maxY ? maxY : d.value;
         })]);
 
-    let tooltip = d3.select(element).append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
-
-
     const updateRulerX = (e: Event): void => {
         let xcoord: number;
         if (e instanceof TouchEvent) {
@@ -72,14 +69,22 @@ const drawDateValueChart = (props: DateValueChartProps, element: HTMLDivElement 
             xcoord = e.clientX;
         }
 
-        let xSelection = d3.select("#" + props.id + " > g > g.x-measure");
-        let svg = d3.select("#" + props.id + " > g");
-        let svgElement = svg.node() as Element;
-        let minX = svgElement.getBoundingClientRect().x + margin.left;
-        let maxX = x((data.length - 1).toString());
-        let xNew = (xcoord - minX) < 0 ? 0 : ((xcoord - minX) > maxX ? maxX : (xcoord - minX));
+        const xSelection = d3.select("#" + props.id + " > g > g.x-measure");
+        const xSelectionLabel = d3.select("#" + props.id + " > g > g.x-measure-label");
+        const svg = d3.select("#" + props.id + " > g");
+        const svgElement = svg.node() as Element;
+        const minX = svgElement.getBoundingClientRect().x + margin.left;
+        const maxX = x((data.length - 1).toString());
+        const xNew = (xcoord - minX) < 0 ? 0 : ((xcoord - minX) > maxX ? maxX : (xcoord - minX));
+        xMeasureGroup.style("display", "block");
         xSelection.attr('transform', `translate(${xNew}, 0)`);
-        xMeasureText.text(data[Math.floor(xNew / x.step())].date.toString());
+        xMeasureLabel.style("display", "block");
+        const dateLabel: Date = new Date(data[Math.floor(xNew / x.step())].date);
+        const dateString = dateLabel.getDate().toString();
+        xMeasureText.text(months[dateLabel.getMonth()] + " " + (dateString.length > 1 ? dateString : ("0" + dateString)));
+
+        const xNewLabel = (xcoord - minX) < 0 ? 0 : ((xcoord - minX + xLabelWidth) > maxX ? (maxX - xLabelWidth) : (xcoord - minX));
+        xSelectionLabel.attr('transform', `translate(${xNewLabel}, 0)`);
     }
 
     const updateRulerY = (e: Event): void => {
@@ -94,12 +99,16 @@ const drawDateValueChart = (props: DateValueChartProps, element: HTMLDivElement 
             ycoord = e.offsetY;
         }
 
-        let ySelection = d3.select("#" + props.id + " > g > g.y-measure");
-        let minY = 0;
-        let maxY = y(0);
-        let yNew = ycoord < minY ? minY : (ycoord > maxY ? maxY : ycoord);
+        const ySelection = d3.select("#" + props.id + " > g > g.y-measure");
+        const ySelectionLabel = d3.select("#" + props.id + " > g > g.y-measure-label");
+        const minY = 0;
+        const maxY = y(0);
+        const yNew = ycoord < minY ? minY : (ycoord > maxY ? maxY : ycoord);
+        const yNewLabel = (ycoord - 7) < minY ? minY + 7 : (ycoord > maxY ? maxY : ycoord);
         ySelection.attr('transform', `translate(0, ${yNew - y(0)})`);
         yMeasureText.text(y.invert(yNew).toFixed());
+        ySelectionLabel.attr('transform', `translate(0, ${yNewLabel-  y(0)})`);
+        yMeasureLabel.style("display", "block");
     }
     const svg = div.append('svg')
         .attr('id', props.id)
@@ -139,16 +148,7 @@ const drawDateValueChart = (props: DateValueChartProps, element: HTMLDivElement 
             }
             return height - y(d.value > maxY ? maxY : d.value)
         })
-        .attr('transform', 'translate(0,0)')
-        .on("mouseover", (e, d) => {
-            let eunknown = e as unknown;
-            let event = eunknown as MouseEvent;
-            let dunknown = d as unknown;
-            let dataPoint = dunknown as DateValueModel;
-            let coords = [event.clientX, event.clientY];
-            showTooltip(dataPoint, tooltip, svg, props.width, coords);
-        })
-        .on("mouseout", d => hideTooltip(tooltip));
+        .attr('transform', 'translate(0,0)');
 
     g.append("path")
         .datum(average)
@@ -164,64 +164,70 @@ const drawDateValueChart = (props: DateValueChartProps, element: HTMLDivElement 
         .attr('transform', `translate(${x.bandwidth() / 2}, ${height})`)
         .call(d3.axisBottom(xAxis).ticks(5).tickFormat(d3.timeFormat("%b %d")));
 
-       // Y Measure
-       const yMeasure = d3.path();
-       yMeasure.moveTo(x("0"), y(0));
-       yMeasure.lineTo(x((data.length - 1).toString()), y(0));
-       
-       const yMeasureGroup = g.append('g')
-           .attr("class", "y-measure");
-       yMeasureGroup.append('path')
-           .attr('stroke', 'lightgrey')
-           .attr('stroke-dasharray', '3, 3')
-           .attr('stroke-width', 1)
-           .attr('d', yMeasure.toString());
-       
-       const yMeasureText = yMeasureGroup.append('text')
-           .attr('x', x("0"))
-           .attr('y', y(0))
-           .style('fill', 'white');
-   
-       // X Measure
-       const xMeasure = d3.path();
-       xMeasure.moveTo(x("0"), 0);
-       xMeasure.lineTo(x("0"), y(0));
-       const xMeasureGroup = g.append('g')
-           .attr("class", "x-measure");
-   
-       xMeasureGroup.append('path')
-           .attr('stroke', 'lightgrey')
-           .attr('stroke-dasharray', '3, 3')
-           .attr('stroke-width', 1)
-           .attr('d', xMeasure.toString());
-   
-       const xMeasureText = xMeasureGroup.append('text')
-           .attr('x', x("0"))
-           .attr('y', y(0))
-           .style('fill', 'white');
-}
+    // Y Measure
+    const yMeasure = d3.path();
+    yMeasure.moveTo(x("0"), y(0));
+    yMeasure.lineTo(x((data.length - 1).toString()), y(0));
 
+    const yMeasureGroup = g.append('g')
+        .attr("class", "y-measure");
+    const yMeasureLabel = g.append('g')
+        .attr("class", "y-measure-label")
+        .style("display", "none");
 
+    yMeasureGroup.append('path')
+        .attr('stroke', 'lightgrey')
+        .attr('stroke-dasharray', '3, 3')
+        .attr('stroke-width', 1)
+        .attr('d', yMeasure.toString());
 
-function showTooltip(d: DateValueModel,
-    tooltip: any, svg: d3.Selection<SVGSVGElement, any, any, any>,
-    maxWidth: any,
-    coords: number[]) {
+    yMeasureLabel.append('rect')
+        .attr('x', x("0") - 46)
+        .attr('y', y(0) - 7)
+        .attr('width', xLabelWidth)
+        .attr('height', 14)
+        .attr('stroke', 'white')
+        .attr('stroke-width', 1)
 
-    let x = (coords[0] + 120) > maxWidth ? maxWidth - 120 : coords[0];
+    const yMeasureText = yMeasureLabel.append('text')
+        .attr('x', x("0") - 9)
+        .attr('y', y(0) + 3)
+        .attr('font-size', '10px')
+        .attr('font-weight', 'bold')
+        .attr('text-anchor', 'end')
+        .style('fill', 'white');
 
-    tooltip.transition()
-        .duration(200)
-        .style("opacity", .9);
-    tooltip.html("<p>" + (new Date(d.date)).toDateString() + "</p><p>" + d.value + "</p>")
-        .style("left", x + "px")
-        .style("top", (coords[1]) + "px");
-}
+    // X Measure
+    const xMeasure = d3.path();
+    xMeasure.moveTo(x("0"), 0);
+    xMeasure.lineTo(x("0"), y(0));
+    const xMeasureGroup = g.append('g')
+        .attr("class", "x-measure")
+        .style("display", "none");
+    const xMeasureLabel = g.append('g')
+        .attr("class", "x-measure-label")
+        .style("display", "none");
 
-function hideTooltip(tooltip: any) {
-    tooltip.transition()
-        .duration(500)
-        .style("opacity", 0);
+    xMeasureGroup.append('path')
+        .attr('stroke', 'lightgrey')
+        .attr('stroke-dasharray', '3, 3')
+        .attr('stroke-width', 1)
+        .attr('d', xMeasure.toString());
+
+    xMeasureLabel.append('rect')
+        .attr('x', x("0"))
+        .attr('y', y(0) + 5)
+        .attr('width', xLabelWidth)
+        .attr('height', 14)
+        .attr('stroke', 'white')
+        .attr('stroke-width', 1)
+
+    const xMeasureText = xMeasureLabel.append('text')
+        .attr('x', x("0") + 2)
+        .attr('y', y(0) + 16)
+        .attr('font-size', '10px')
+        .attr('font-weight', 'bold')
+        .style('fill', 'white');
 }
 
 function sevenDayRollingAverage(data: DateValueModel[]): [number, number][] {
