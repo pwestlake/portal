@@ -1,12 +1,12 @@
 import React from "react";
-import { DateValueModel } from "../../models/datevalue";
+import { DateValueModel } from "../../../models/datevalue";
 import { ResizeObserver } from "resize-observer";
 import { Auth, API } from "aws-amplify";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
-import DateValueChart from "../../components/chart/date-value/date-value";
+import DateValueChart from "../../../components/chart/date-value/date-value";
 import { IconButton, Icon, Drawer, Box } from "@material-ui/core";
 import CountrySearch from "./country-search";
 

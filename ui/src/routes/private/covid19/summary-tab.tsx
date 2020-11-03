@@ -1,8 +1,8 @@
 import React from "react";
 import { Grid, Card, CardHeader, CardContent, IconButton, Icon, Drawer, Box } from "@material-ui/core";
 import { API, Auth } from "aws-amplify";
-import { KeyValueModel } from "../../models/keyvalue";
-import HBarChart from "../../components/chart/hbar-chart/hbar-chart";
+import { KeyValueModel } from "../../../models/keyvalue";
+import HBarChart from "../../../components/chart/hbar-chart/hbar-chart";
 import { ResizeObserver } from 'resize-observer';
 import Settings from "./settings";
 

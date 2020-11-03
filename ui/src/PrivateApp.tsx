@@ -4,7 +4,6 @@ import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 import { AmplifyAuthenticator } from "@aws-amplify/ui-react";
 import { Amplify, Auth, API } from "aws-amplify";
 import awsconfig from './aws-exports';
-import { HashRouter } from "react-router-dom";
 import App from "./App";
 
 Amplify.configure({
@@ -26,7 +25,7 @@ Amplify.configure({
     }}
   )
   
-const BootstrapApp: FunctionComponent = () => {
+const PrivateApp: FunctionComponent = () => {
     const [authState, setAuthState] = React.useState<AuthState>();
     const [theme, setTheme] = React.useState<string>();
 
@@ -54,9 +53,7 @@ const BootstrapApp: FunctionComponent = () => {
     }, []);
 
     return authState === AuthState.SignedIn && theme ? (
-        <HashRouter>
             <App themeName={theme === undefined ? 'blue-dark' : theme}/>
-        </HashRouter>
     ) : (
         <AmplifyAuthenticator style={{
             display: 'flex',
@@ -66,4 +63,4 @@ const BootstrapApp: FunctionComponent = () => {
     );
 }
 
-export default BootstrapApp;
+export default PrivateApp;

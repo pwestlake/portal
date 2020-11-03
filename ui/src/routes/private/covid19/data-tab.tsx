@@ -1,6 +1,6 @@
 import React from "react";
 import { Drawer, Grid, Icon, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
-import { Covid19TableItemModel } from "../../models/coviddataitem";
+import { Covid19TableItemModel } from "../../../models/coviddataitem";
 import { API, Auth } from "aws-amplify";
 import { ResizeObserver } from "resize-observer";
 import CountrySearch from "./country-search";
