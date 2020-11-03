@@ -83,7 +83,7 @@ const drawDateValueChart = (props: DateValueChartProps, element: HTMLDivElement 
         const dateString = dateLabel.getDate().toString();
         xMeasureText.text(months[dateLabel.getMonth()] + " " + (dateString.length > 1 ? dateString : ("0" + dateString)));
 
-        const xNewLabel = (xcoord - minX) < 0 ? 0 : ((xcoord - minX + xLabelWidth) > maxX ? (maxX - xLabelWidth) : (xcoord - minX));
+        const xNewLabel = (xcoord - minX - (xLabelWidth / 2)) < 0 ? (xLabelWidth / 2) : ((xcoord - minX + (xLabelWidth / 2)) > maxX ? (maxX - (xLabelWidth / 2)) : (xcoord - minX));
         xSelectionLabel.attr('transform', `translate(${xNewLabel}, 0)`);
     }
 
@@ -186,7 +186,8 @@ const drawDateValueChart = (props: DateValueChartProps, element: HTMLDivElement 
         .attr('y', y(0) - 7)
         .attr('width', xLabelWidth)
         .attr('height', 14)
-        .attr('stroke', 'white')
+        .attr('stroke', theme.palette.text.primary)
+        .attr('fill', theme.palette.background.paper)
         .attr('stroke-width', 1)
 
     const yMeasureText = yMeasureLabel.append('text')
@@ -195,7 +196,7 @@ const drawDateValueChart = (props: DateValueChartProps, element: HTMLDivElement 
         .attr('font-size', '10px')
         .attr('font-weight', 'bold')
         .attr('text-anchor', 'end')
-        .style('fill', 'white');
+        .style('fill', theme.palette.text.primary);
 
     // X Measure
     const xMeasure = d3.path();
@@ -215,19 +216,20 @@ const drawDateValueChart = (props: DateValueChartProps, element: HTMLDivElement 
         .attr('d', xMeasure.toString());
 
     xMeasureLabel.append('rect')
-        .attr('x', x("0"))
+        .attr('x', x("0") - (xLabelWidth / 2))
         .attr('y', y(0) + 5)
         .attr('width', xLabelWidth)
         .attr('height', 14)
-        .attr('stroke', 'white')
+        .attr('stroke', theme.palette.text.primary)
+        .attr('fill', theme.palette.background.paper)
         .attr('stroke-width', 1)
 
     const xMeasureText = xMeasureLabel.append('text')
-        .attr('x', x("0") + 2)
+        .attr('x', x("0") + 2 - (xLabelWidth / 2))
         .attr('y', y(0) + 16)
         .attr('font-size', '10px')
         .attr('font-weight', 'bold')
-        .style('fill', 'white');
+        .style('fill', theme.palette.text.primary);
 }
 
 function sevenDayRollingAverage(data: DateValueModel[]): [number, number][] {
