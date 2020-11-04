@@ -25,33 +25,30 @@ Resources:
   DbRegionParameter:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: /covid19/DbRegion
+      Name: /portal/DbRegion
       Type: String
       Value: !Ref DbRegion
 
   DynamoDbEndpointParameter:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: /covid19/DynamoDbEndpoint
+      Name: /portal/DynamoDbEndpoint
       Type: String
       Value: !Ref DynamoDbEndpoint
 
-  HelloWorldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  PortalApi:
+    Type: AWS::Serverless::Api
     Properties:
-      CodeUri: hello-world/
-      Handler: hello-world
-      Runtime: go1.x
-      Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
-      Events:
-        CatchAll:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /hello
-            Method: GET
-      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
-        Variables:
-          PARAM1: VALUE
+      StageName: Prod
+      Cors:
+        AllowMethods: "OPTIONS,POST,GET"
+        AllowOrigin: "*"
+      DefinitionBody:
+        Fn::Transform:
+          Name: AWS::Include
+          Parameters:
+            Location: s3://portal-api-definitions/portal-prod-openapi.yaml
+
   SummaryFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -63,13 +60,14 @@ Resources:
         CatchAll:
           Type: Api
           Properties:
+            RestApiId: !Ref PortalApi
             Path: /summary/{type}
             Method: GET
       Environment:
         Variables:
           PARAM1: VALUE
-          REGION: "{{resolve:ssm:/covid19/DbRegion:1}}"
-          DYNAMODB_ENDPOINT: "{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}"
+          REGION: "{{resolve:ssm:/portal/DbRegion:1}}"
+          DYNAMODB_ENDPOINT: "{{resolve:ssm:/portal/DynamoDbEndpoint:1}}"
   UserPreferencesFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -81,17 +79,19 @@ Resources:
         GetPreference:
           Type: Api
           Properties:
+            RestApiId: !Ref PortalApi
             Path: /userservice/preferences/{user}/{key}
             Method: GET
         PostPreference:
           Type: Api
           Properties:
+            RestApiId: !Ref PortalApi
             Path: /userservice/preferences/{user}/{key}
             Method: POST
       Environment:
         Variables:
-          REGION: "{{resolve:ssm:/covid19/DbRegion:1}}"
-          DYNAMODB_ENDPOINT: "{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}"
+          REGION: "{{resolve:ssm:/portal/DbRegion:1}}"
+          DYNAMODB_ENDPOINT: "{{resolve:ssm:/portal/DynamoDbEndpoint:1}}"
 
   RegionFunction:
     Type: AWS::Serverless::Function
@@ -104,12 +104,13 @@ Resources:
         GetPreference:
           Type: Api
           Properties:
+            RestApiId: !Ref PortalApi
             Path: /regions
             Method: GET
       Environment:
         Variables:
-          REGION: "{{resolve:ssm:/covid19/DbRegion:1}}"
-          DYNAMODB_ENDPOINT: "{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}"
+          REGION: "{{resolve:ssm:/portal/DbRegion:1}}"
+          DYNAMODB_ENDPOINT: "{{resolve:ssm:/portal/DynamoDbEndpoint:1}}"
 
   Covid19DataFunction:
     Type: AWS::Serverless::Function
@@ -122,17 +123,19 @@ Resources:
         GetCases:
           Type: Api
           Properties:
+            RestApiId: !Ref PortalApi
             Path: /covid19data/{type}/{region}
             Method: GET
         GetAll:
           Type: Api
           Properties:
+            RestApiId: !Ref PortalApi
             Path: /covid19data/{type}
             Method: GET
       Environment:
         Variables:
-          REGION: "{{resolve:ssm:/covid19/DbRegion:1}}"
-          DYNAMODB_ENDPOINT: "{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}"
+          REGION: "{{resolve:ssm:/portal/DbRegion:1}}"
+          DYNAMODB_ENDPOINT: "{{resolve:ssm:/portal/DynamoDbEndpoint:1}}"
 
   Covid19UpdateFunction:
     Type: AWS::Serverless::Function
@@ -146,23 +149,10 @@ Resources:
           Type: Schedule
           Properties:
             Schedule: "rate(10 minutes)"
-            Name: Covid19UpdateSchedule
+            Name: PortalCovid19UpdateSchedule
             Description: covid-19 update schedule
             Enabled: False
       Environment:
         Variables:
-          REGION: "{{resolve:ssm:/covid19/DbRegion:1}}"
-          DYNAMODB_ENDPOINT: "{{resolve:ssm:/covid19/DynamoDbEndpoint:1}}"
-Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  HelloWorldAPI:
-    Description: "API Gateway endpoint URL for Prod environment for First Function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
-    Description: "First Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+          REGION: "{{resolve:ssm:/portal/DbRegion:1}}"
+          DYNAMODB_ENDPOINT: "{{resolve:ssm:/portal/DynamoDbEndpoint:1}}"

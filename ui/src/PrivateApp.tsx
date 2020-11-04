@@ -18,7 +18,7 @@ Amplify.configure({
       endpoints: [
           {
               name: "covid19",
-              endpoint: 'https://9iamktjo13.execute-api.eu-west-2.amazonaws.com/Prod/',
+              endpoint: 'https://mz0pes0y42.execute-api.eu-west-2.amazonaws.com/Prod/',
               region: awsconfig.aws_cognito_region
           },
       ]
