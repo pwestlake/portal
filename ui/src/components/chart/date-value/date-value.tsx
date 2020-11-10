@@ -4,6 +4,7 @@ import drawDateValueChart from "./date-value-d3";
 import { useTheme } from "@material-ui/core/styles";
 
 export interface DateValueChartProps {
+    id: string,
     data: DateValueModel[];
     width: number;
     height: number;

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/pwestlake/portal/lambda/covid19/region/pkg/service"
+	"github.com/pwestlake/portal/lambda/commons"
 	"net/http"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -15,6 +16,15 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		"Access-Control-Allow-Methods": "GET",
 		"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
 		"Content-Type": "application/json",
+	}
+
+	err := RequireGroup("covid19")
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			Body:       "{\"Error\":\"Not authorized\"}",
+			StatusCode: http.StatusUnauthorized,
+			Headers: headers,
+		}, nil
 	}
 
 	regionService := service.InitializeRegionService()

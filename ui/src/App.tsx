@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import './App.css';
 import { AppBar, Toolbar, IconButton, Icon, Typography, Drawer, Theme, makeStyles, createStyles, Grid, List, ListItem, ListItemIcon, ListItemText, Menu, MenuItem, createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 import { Route } from 'react-router-dom';
-import { Covid19View } from './routes/covid19/covid19-view';
+import { Covid19View } from './routes/private/covid19/covid19-view';
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
 import { Omit } from '@material-ui/types';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -257,7 +257,7 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
                 }}>
                 <h3>Charts</h3>
                 <List aria-label="main menu">
-                  <ListItemLink to="/covid19" primary="Covid-19" />
+                  <ListItemLink to="/private/covid19" primary="Covid-19" />
               
                 </List>
               </Drawer>
@@ -269,7 +269,7 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
                 //   [classes.contentShift]: state,
                 // })}
               >
-                <Route exact path="/covid19" render={() => <Covid19View />} />
+                <Route exact path="/private/covid19" render={() => <Covid19View />} />
                 
               </main>
             </Grid>

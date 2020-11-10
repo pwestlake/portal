@@ -13,7 +13,7 @@ import (
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	pathParams := request.PathParameters
 	queryParams := request.QueryStringParameters
-
+	
 	headers := map[string]string{
 		"Access-Control-Allow-Origin": "*", 
 		"Access-Control-Allow-Methods": "GET",

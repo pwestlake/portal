@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import BootstrapApp from './BootstrapApp';
+import PublicApp from './PublicApp';
 import * as serviceWorker from './serviceWorker';
 import Helmet from 'react-helmet';
 
@@ -16,7 +16,7 @@ const Main: Function = async () => {
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </Helmet>
     
-      <BootstrapApp />
+      <PublicApp />
     </React.StrictMode>,
     document.getElementById('root')
   );

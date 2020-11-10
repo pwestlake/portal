@@ -27,6 +27,37 @@ func NewCovid19DataDao() Covid19DataDao {
 	}
 }
 
+// PersistData ...
+// Write the given list of items to the database.
+// Return the number of items written
+func (s *Covid19DataDao) PersistData(data *[]domain.Covid19DataItem) (int, error) {
+	dbSession := session.Must(session.NewSession())
+	client := dynamodb.New(dbSession, aws.NewConfig().WithEndpoint(s.endpoint).WithRegion(s.region))
+
+	count := 0
+	var err error = nil
+	for _, v := range *data {
+		av, err := dynamodbattribute.MarshalMap(v)
+		if err != nil {
+			break
+		}
+
+		input := &dynamodb.PutItemInput{
+			Item:      av,
+			TableName: aws.String("Covid-19"),
+		}
+
+		_, err = client.PutItem(input)
+		if err != nil {
+			break
+		}
+		
+		count++
+	}
+
+	return count, err
+} 
+
 // GetDataForRegion ...
 // Returns a pointer to an array of Covid19DataItems with the given region
 func (s *Covid19DataDao) GetDataForRegion(regionName string) (*[]domain.Covid19DataItem, error) {
