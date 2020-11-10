@@ -20,6 +20,9 @@
 		},
 		{
 			"path": "lambda/equity-fund/equitycatalog"
+		},
+		{
+			"path": "lambda/commons"
 		}
 	]
 }
