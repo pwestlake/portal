@@ -1,1 +1,5 @@
 lambda/covid19/env.json
+lambda/.aws-sam/build
+lambda/samconfig.toml
+lambda/template.yaml
+lambda/portal-prod-openapi.yaml

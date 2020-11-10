@@ -17,6 +17,9 @@
 		},
 		{
 			"path": "lambda/covid19/covid19update"
+		},
+		{
+			"path": "lambda/equity-fund/equitycatalog"
 		}
 	]
 }
