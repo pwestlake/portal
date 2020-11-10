@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strings"
 	"encoding/json"
 	"fmt"
 	"github.com/pwestlake/portal/lambda/covid19/region/pkg/service"
@@ -15,6 +16,22 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		"Access-Control-Allow-Methods": "GET",
 		"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
 		"Content-Type": "application/json",
+	}
+
+	unauthorized := events.APIGatewayProxyResponse{
+		Body:       "{\"Error\":\"Not authorized\"}",
+		StatusCode: http.StatusUnauthorized,
+		Headers: headers,
+	}
+
+	claims, ok  := request.RequestContext.Authorizer["claims"].(map[string]interface{})
+	if !ok {
+		return unauthorized, nil
+	}
+
+	groups, ok := claims["cognito:groups"].(string)
+	if !ok || !strings.Contains(groups, "covid19") {
+		return unauthorized, nil
 	}
 
 	regionService := service.InitializeRegionService()

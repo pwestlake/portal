@@ -59,6 +59,7 @@ export class Covid19View extends React.Component<Covid19ViewProps, Covid19ViewSt
   async componentDidMount() {
     let sessionObject = await Auth.currentSession();
     let path = "/regions";
+    
     let idToken = sessionObject.getIdToken().getJwtToken();
     let init = {
         response: true,
