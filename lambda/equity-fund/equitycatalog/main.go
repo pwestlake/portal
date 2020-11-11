@@ -1,6 +1,9 @@
 package main
 
 import (
+	"fmt"
+	"encoding/json"
+	"github.com/pwestlake/portal/lambda/equity-fund/equitycatalog/pkg/service"
 	"net/http"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -13,9 +16,28 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		"Content-Type": "application/json",
 	}
 
+	equityCatalogService := service.InitializeEquityCatalogService()
+	equityCatalogItems, err := equityCatalogService.GetAllEquityCatalogItems()
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			Body:       fmt.Sprintf("{\"error\":\"%v\"}", err),
+			StatusCode: http.StatusInternalServerError,
+			Headers: headers,
+		}, err
+	}
+
+	itemsJSON, err := json.Marshal(equityCatalogItems)
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			Body:       fmt.Sprintf("{\"error\":\"%v\"}", err),
+			StatusCode: http.StatusInternalServerError,
+			Headers:    headers,
+		}, err
+	}
+
 	return events.APIGatewayProxyResponse{
-		Body:       "{\"Error\":\"Unsupported\"}",
-		StatusCode: http.StatusBadRequest,
+		Body:       string(itemsJSON),
+		StatusCode: http.StatusOK,
 		Headers: headers,
 	}, nil
 }

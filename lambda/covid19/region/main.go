@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/pwestlake/portal/lambda/covid19/region/pkg/service"
-	"github.com/pwestlake/portal/lambda/commons"
+	"github.com/pwestlake/portal/lambda/commons/pkg/security"
 	"net/http"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -18,7 +18,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		"Content-Type": "application/json",
 	}
 
-	err := RequireGroup("covid19")
+	err := security.RequireGroup("covid19", request)
 	if err != nil {
 		return events.APIGatewayProxyResponse{
 			Body:       "{\"Error\":\"Not authorized\"}",

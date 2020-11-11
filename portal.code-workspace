@@ -23,6 +23,9 @@
 		},
 		{
 			"path": "lambda/commons"
+		},
+		{
+			"path": "lambda/equity-fund/eod"
 		}
 	]
 }

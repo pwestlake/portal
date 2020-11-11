@@ -3,3 +3,4 @@ lambda/.aws-sam/build
 lambda/samconfig.toml
 lambda/template.yaml
 lambda/portal-prod-openapi.yaml
+lambda/portal-Prod-swagger-apigateway.yaml
