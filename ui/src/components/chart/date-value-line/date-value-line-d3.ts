@@ -1,17 +1,17 @@
 
-import { DateValueChartProps } from './date-value';
+import { DateValueLineChartProps } from './date-value-line';
 import { Theme } from '@material-ui/core';
 import { DateValueModel } from '../../../models/datevalue';
 import * as d3 from 'd3';
-import './date-value.css';
+import './date-value-line.css';
 
-const drawDateValueChart = (props: DateValueChartProps, element: HTMLDivElement | null, theme: Theme) => {
+const drawDateValueLineChart = (props: DateValueLineChartProps, element: HTMLDivElement | null, theme: Theme) => {
     const data = props.data;
     const average: [number, number][] = sevenDayRollingAverage(data);
     let maxY = undefined;
 
     const margin = { top: 0, right: 16, bottom: 20, left: 47 };
-    const months : string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const months: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const xLabelWidth = 40;
     const width = props.width - margin.left - margin.right;
     const height = props.height - margin.top - margin.bottom;
@@ -36,6 +36,10 @@ const drawDateValueChart = (props: DateValueChartProps, element: HTMLDivElement 
             return d.value > maxY ? maxY : d.value;
         })])
         .range([height, margin.top])
+
+    const chartline = d3.line<DateValueModel>()
+        .x(d => xLine(new Date(d.date)))
+        .y(d => yLine(d.value));
 
     const line = d3.line()
         .x(d => xLine(d[0]))
@@ -107,7 +111,7 @@ const drawDateValueChart = (props: DateValueChartProps, element: HTMLDivElement 
         const yNewLabel = (ycoord - 7) < minY ? minY + 7 : (ycoord > maxY ? maxY : ycoord);
         ySelection.attr('transform', `translate(0, ${yNew - y(0)})`);
         yMeasureText.text(y.invert(yNew).toFixed());
-        ySelectionLabel.attr('transform', `translate(0, ${yNewLabel-  y(0)})`);
+        ySelectionLabel.attr('transform', `translate(0, ${yNewLabel - y(0)})`);
         yMeasureLabel.style("display", "block");
     }
     const svg = div.append('svg')
@@ -130,25 +134,31 @@ const drawDateValueChart = (props: DateValueChartProps, element: HTMLDivElement 
         .attr('text-anchor', 'end')
         .text('Count');
 
-    g.selectAll('.chart-primary')
-        .data(data)
-        .enter().append('rect')
-        .attr('fill', theme.palette.primary.main)
-        .attr('x', (d, i) => x(i.toString()))
-        .attr('y', d => {
-            if (typeof (maxY) == 'undefined') {
-                return y(d.value);
-            }
-            return y(d.value > maxY ? maxY : d.value)
-        })
-        .attr('width', x.bandwidth)
-        .attr('height', d => {
-            if (typeof (maxY) == 'undefined') {
-                return (height - y(d.value)) < 0 ? 0 : (height - y(d.value));
-            }
-            return height - y(d.value > maxY ? maxY : d.value)
-        })
-        .attr('transform', 'translate(0,0)');
+    g.append('path')
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", "#42a5f5")
+        .attr("stroke-width", 2)
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("d", chartline);
+    // .enter().append('rect')
+    // .attr('fill', theme.palette.primary.main)
+    // .attr('x', (d, i) => x(i.toString()))
+    // .attr('y', d => {
+    //     if (typeof (maxY) == 'undefined') {
+    //         return y(d.value);
+    //     }
+    //     return y(d.value > maxY ? maxY : d.value)
+    // })
+    // .attr('width', x.bandwidth)
+    // .attr('height', d => {
+    //     if (typeof (maxY) == 'undefined') {
+    //         return (height - y(d.value)) < 0 ? 0 : (height - y(d.value));
+    //     }
+    //     return height - y(d.value > maxY ? maxY : d.value)
+    // })
+    // .attr('transform', 'translate(0,0)');
 
     g.append("path")
         .datum(average)
@@ -248,6 +258,9 @@ function sevenDayRollingAverage(data: DateValueModel[]): [number, number][] {
             rollingAverage -= (data[i - 7].value / 7);
             value = rollingAverage;
         }
+        else {
+            value = data[i].value;
+        }
 
 
         const item: [number, number] = [new Date(data[i].date).getTime(), value];
@@ -259,4 +272,4 @@ function sevenDayRollingAverage(data: DateValueModel[]): [number, number][] {
     return result;
 }
 
-export default drawDateValueChart;
+export default drawDateValueLineChart;
