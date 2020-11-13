@@ -10,10 +10,10 @@ export interface ChartsTabProps {
 
 const ChartsTab = (props: ChartsTabProps) => {
     return (
-        <Grid container spacing={3} style={{padding: "16px"}}>
+        <Grid container>
             {props.catalog.map((i) => {
                 return (
-                    <Grid key={i.id} item xs={12} md={4} >
+                    <Grid key={i.id} item xs={12} md={4} style={{padding: "12px 12px 0px 12px"}}>
                         <Card>
                             <CardHeader title={i.symbol}>
                             </CardHeader>
