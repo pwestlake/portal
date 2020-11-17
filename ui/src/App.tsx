@@ -42,6 +42,17 @@ function ListItemLink(props: ListItemLinkProps) {
 }
 
 const App: FunctionComponent<AppProps> = ({themeName}) => {
+  const [dotpercentRole, setDotpercentRole] = React.useState(false);
+    React.useEffect(() => {
+        Auth.currentSession().then(session => {
+            const details = session.getIdToken().decodePayload();
+            const groups = details['cognito:groups'] as string[];
+            if (groups !== undefined) {
+                setDotpercentRole(groups.includes('dotpercent'));
+            }
+        });
+    }, []);
+
   let themeMap = new Map<string, Theme>();
   const light = createMuiTheme({
     overrides: {
@@ -259,7 +270,8 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
                 <h3>Charts</h3>
                 <List aria-label="main menu">
                   <ListItemLink to="/private/covid19" primary="Covid-19" />
-              
+                  {dotpercentRole &&
+                  <ListItemLink to="/private/equity-fund" primary="DotPercent" />}
                 </List>
               </Drawer>
 

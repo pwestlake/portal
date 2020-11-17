@@ -4,6 +4,7 @@ import { Auth, API } from "aws-amplify";
 import { AppBar, Paper, Tab, Tabs } from "@material-ui/core";
 import { EquityCatalogItemModel } from "../../../models/equitycatalogitem";
 import ChartsTab from "./charts-tab";
+import LatestTab from "./latest-tab";
 
 interface EquityFundViewState {
   tab: number;
@@ -86,16 +87,16 @@ export class EquityFundView extends React.Component<EquityFundViewProps, EquityF
           variant="scrollable"
           scrollButtons="auto"
           aria-label="covid-19 tabs">
-          <Tab label="Charts" {...a11yProps(0)} />
-          <Tab label="Latest" {...a11yProps(1)} />
+          <Tab label="Latest" {...a11yProps(0)} />
+          <Tab label="Charts" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
       <Paper square={true} style={{width: "100vw", height: "calc(100vh - 104px)", overflow: "scroll"}}>
         <TabPanel value={this.state.tab} index={0}>
-          <ChartsTab catalog={this.state.catalog}/>
+          <LatestTab />
         </TabPanel>
         <TabPanel value={this.state.tab} index={1}>
-          <p>Latest</p>
+          <ChartsTab catalog={this.state.catalog}/>
         </TabPanel>
       </Paper>
 
