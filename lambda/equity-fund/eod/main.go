@@ -24,6 +24,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	eodService := service.InitializeEndOfDayService()
 
 	switch {
+		// Timeseries close price for given id
 	case strings.Contains(path, "/timeseries/close"):
 		id, ok := request.PathParameters["id"]
 		if !ok {
@@ -34,6 +35,10 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 			}, nil
 		}
 		return hdlr.HandleTimeseriesClose(id, eodService, headers)
+
+		// Latest end of day price data for all
+	case strings.Contains(path, "/latest-eod"):
+		return hdlr.HandleLatestEndOfDay(eodService, headers)
 	}
 
 	return events.APIGatewayProxyResponse{
