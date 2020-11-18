@@ -26,6 +26,9 @@
 		},
 		{
 			"path": "lambda/equity-fund/eod"
+		},
+		{
+			"path": "lambda/equity-fund/news"
 		}
 	]
 }

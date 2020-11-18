@@ -16,3 +16,12 @@
     pointer-events: none; 
     padding-right: 24px;
 }
+
+.bottom-app-bar {
+    position: static;
+    bottom: 0px;
+}
+
+.top-app-bar {
+    position: static;
+}

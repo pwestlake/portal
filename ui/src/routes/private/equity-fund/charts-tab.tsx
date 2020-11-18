@@ -28,7 +28,7 @@ const ChartsTab = (props: ChartsTabProps) => {
         );
 
     return (
-        <Grid style={display === undefined ? {} : {height: "100%"}}>
+        <Grid container style={display === undefined ? {} : {height: "100%"}}>
             {props.catalog.map((i) => {
                 return (
                     (display === undefined || display === i.id) &&

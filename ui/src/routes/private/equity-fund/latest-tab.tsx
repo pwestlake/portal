@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, useMediaQuery, useTheme } from "@material-ui/core";
+import { AppBar, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, useMediaQuery, useTheme } from "@material-ui/core";
 import { API, Auth } from "aws-amplify";
 import React from "react";
 import { EndOfDayItem } from "../../../models/eoditem";
@@ -32,40 +32,59 @@ const LatestTab = (props: LatestTabProps) => {
         sourceAndSetData();
     }, []);
 
-    const financial = (x) => Number.parseFloat(x).toFixed(2);
+    const financial = (x: number) => x.toFixed(2);
+
+    const getTitle = (): string => {
+        if (data.length === 0) {
+            return "";
+        }
+
+        return new Date(data[0].date).toDateString();
+    }
 
     return (
         <div style={{height: "100%" }}>
-            <TableContainer style={{height: "100%" }} >
-                <Table stickyHeader>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Symbol</TableCell>
-                            {greaterThanSm && <TableCell>Open</TableCell>}
-                            <TableCell>High</TableCell>
-                            <TableCell>Low</TableCell>
-                            <TableCell>Close</TableCell>
-                            <TableCell>Change</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {data.map((row) => (
-                            <TableRow key={row.id}>
-                                <TableCell scope="row">{row.symbol}</TableCell>
-                                {greaterThanSm && <TableCell>{row.open}</TableCell>}
-                                <TableCell>{row.high}</TableCell>
-                                <TableCell>{row.low}</TableCell>
-                                <TableCell>{row.close}</TableCell>
-                                <TableCell>
-                                    <span className={row.close_chg > 0 ? 'up' : row.close_chg < 0 ? 'down' : ''}>
-                                        {financial(row.close_chg)}
-                                    </span>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <Grid container direction="column">
+                <Grid item>
+                    <AppBar position="static">
+                        <Typography variant="h6" className="title">{getTitle()}</Typography>
+                    </AppBar>
+                </Grid>
+                <Grid item>
+                    <TableContainer style={{height: "calc(100vh - 159px)" }} >
+                        <Table stickyHeader={true}>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align={"center"}>Symbol</TableCell>
+                                    {greaterThanSm && <TableCell align={"center"}>Open</TableCell>}
+                                    {greaterThanSm && <TableCell align={"center"}>High</TableCell>}
+                                    {greaterThanSm && <TableCell align={"center"}>Low</TableCell>}
+                                    {!greaterThanSm && <TableCell align={"center"}>High/Low</TableCell>}
+                                    <TableCell align={"center"}>Close</TableCell>
+                                    <TableCell align={"center"}>Chg</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {data.map((row) => (
+                                    <TableRow key={row.id}>
+                                        <TableCell scope="row">{row.symbol}</TableCell>
+                                        {greaterThanSm && <TableCell align={"right"}>{row.open}</TableCell>}
+                                        {greaterThanSm && <TableCell align={"right"}>{row.high}</TableCell>}
+                                        {greaterThanSm && <TableCell align={"right"}>{row.low}</TableCell>}
+                                        {!greaterThanSm && <TableCell>{row.high}/{row.low}</TableCell>}
+                                        <TableCell align={"right"}>{financial(row.close)}</TableCell>
+                                        <TableCell align={"right"}>
+                                            <span className={row.close_chg > 0 ? 'up' : row.close_chg < 0 ? 'down' : ''}>
+                                                {financial(row.close_chg)}
+                                            </span>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Grid>
+            </Grid>
         </div>
     );
 }

@@ -8,7 +8,7 @@ import { Omit } from '@material-ui/types';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { grey } from '@material-ui/core/colors';
 import { Auth, API } from 'aws-amplify';
-import { EquityFundView } from './routes/private/equity-fund/equity-fund-view';
+import EquityFundView from './routes/private/equity-fund/equity-fund-view';
 
 interface AppProps {
   themeName: string;

@@ -1,15 +1,12 @@
 import React from "react";
 import './equity-fund-view.css';
 import { Auth, API } from "aws-amplify";
-import { AppBar, Paper, Tab, Tabs } from "@material-ui/core";
+import { AppBar, Paper, Tab, Tabs} from "@material-ui/core";
 import { EquityCatalogItemModel } from "../../../models/equitycatalogitem";
 import ChartsTab from "./charts-tab";
 import LatestTab from "./latest-tab";
+import NewsTab from "./news-tab";
 
-interface EquityFundViewState {
-  tab: number;
-  catalog: EquityCatalogItemModel[];
-}
 
 interface EquityFundViewProps {
 }
@@ -45,62 +42,64 @@ function a11yProps(index: any) {
   };
 }
 
-export class EquityFundView extends React.Component<EquityFundViewProps, EquityFundViewState> {
-
-
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      tab: 0,
-      catalog: []
-    };
-  }
-
-  async componentDidMount() {
-    let sessionObject = await Auth.currentSession();
-    let path = "/equity-fund/equitycatalog";
-    
-    let idToken = sessionObject.getIdToken().getJwtToken();
-    let init = {
-        response: true,
-        headers: { Authorization: idToken },
+const EquityFundView = (props: EquityFundViewProps) => {
+  const [tab, setTab] = React.useState<number>(0);
+  const [catalog, setCatalog] = React.useState<EquityCatalogItemModel[]>([]);
+  
+  React.useEffect(() => {
+    async function sourceAndSetData() {
+      let sessionObject = await Auth.currentSession();
+      let path = "/equity-fund/equitycatalog";
+      
+      let idToken = sessionObject.getIdToken().getJwtToken();
+      let init = {
+          response: true,
+          headers: { Authorization: idToken },
     };
 
     API.get('covid19', path, init)
         .then(response => {
-            this.setState({ catalog: response.data as EquityCatalogItemModel[] });
+            setCatalog(response.data as EquityCatalogItemModel[]);
         })
         .catch(error => {
             console.log(error.response);
         });
-  }
+    }
+    sourceAndSetData();
+  }, []); 
 
-  tabChanged = (event: React.ChangeEvent<{}>, newValue: number) => {
-    this.setState({ tab: newValue });
+
+  const tabChanged = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setTab(newValue);
   };
 
-  render() {
-    return <div className="main">
 
-      <AppBar position="static" elevation={0} style={{bottom: "0px", position: "fixed"}}>
-        <Tabs value={this.state.tab} onChange={this.tabChanged}
-          variant="scrollable"
-          scrollButtons="auto"
-          aria-label="covid-19 tabs">
-          <Tab label="Latest" {...a11yProps(0)} />
-          <Tab label="Charts" {...a11yProps(1)} />
-        </Tabs>
-      </AppBar>
-      <Paper square={true} style={{width: "100vw", height: "calc(100vh - 104px)", overflow: "scroll"}}>
-        <TabPanel value={this.state.tab} index={0}>
-          <LatestTab />
-        </TabPanel>
-        <TabPanel value={this.state.tab} index={1}>
-          <ChartsTab catalog={this.state.catalog}/>
-        </TabPanel>
-      </Paper>
+    return (
+      <div className="main">
 
-
-    </div>
-  }
+        <AppBar position="static" elevation={0}>
+          <Tabs value={tab} onChange={tabChanged}
+            variant="scrollable"
+            scrollButtons="auto"
+            aria-label="covid-19 tabs">
+            <Tab label="Latest" {...a11yProps(0)} />
+            <Tab label="Charts" {...a11yProps(1)} />
+            <Tab label="News" {...a11yProps(2)} />
+          </Tabs>
+        </AppBar>
+        <Paper square={true} style={{width: "100vw", height: "calc(100vh - 104px)", overflow: "scroll"}}>
+          <TabPanel value={tab} index={0}>
+            <LatestTab />
+          </TabPanel>
+          <TabPanel value={tab} index={1}>
+            <ChartsTab catalog={catalog}/>
+          </TabPanel>
+          <TabPanel value={tab} index={2}>
+            <NewsTab/>
+          </TabPanel>
+        </Paper>
+      </div>
+    )
 }
+
+export default EquityFundView;
