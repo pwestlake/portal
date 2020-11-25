@@ -8,7 +8,7 @@ const PublicApp: FunctionComponent = () => {
     return (
         <HashRouter>
             <Switch>
-                <Route path="/" exact render={() => <Home/>}/>
+                <Route exact path="/" render={() => <Home/>}/>
                 <Route path="/private" render={() => <PrivateApp />}/>
             </Switch>
         </HashRouter>

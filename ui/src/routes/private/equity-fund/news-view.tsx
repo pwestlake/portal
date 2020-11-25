@@ -15,8 +15,8 @@ function toHtml(text: string): string {
 
     let strings: string[] = text.split("\\n");
     
-    for (let paragraph in strings) {
-        html = html.concat(`<p>${strings[paragraph]}</p>`);
+    for (let paragraph of strings) {
+        html = html.concat(`<p>${paragraph}</p>`);
     }
 
     html = html.replace(/\\&q;/g, "\"");

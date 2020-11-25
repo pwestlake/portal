@@ -8,23 +8,24 @@ import App from "./App";
 
 Amplify.configure({
     Auth: {
-      mandatorySignIn: true,
-      region: awsconfig.aws_cognito_region,
-      userPoolId: awsconfig.aws_user_pools_id,
-      identityPoolId: awsconfig.aws_cognito_identity_pool_id,
-      userPoolWebClientId: awsconfig.aws_user_pools_web_client_id
+        mandatorySignIn: true,
+        region: awsconfig.aws_cognito_region,
+        userPoolId: awsconfig.aws_user_pools_id,
+        identityPoolId: awsconfig.aws_cognito_identity_pool_id,
+        userPoolWebClientId: awsconfig.aws_user_pools_web_client_id
     },
     API: {
-      endpoints: [
-          {
-              name: "covid19",
-              endpoint: 'https://mz0pes0y42.execute-api.eu-west-2.amazonaws.com/Prod/',
-              region: awsconfig.aws_cognito_region
-          },
-      ]
-    }}
-  )
-  
+        endpoints: [
+            {
+                name: "covid19",
+                endpoint: 'https://mz0pes0y42.execute-api.eu-west-2.amazonaws.com/Prod/',
+                region: awsconfig.aws_cognito_region
+            },
+        ]
+    }
+}
+)
+
 const PrivateApp: FunctionComponent = () => {
     const [authState, setAuthState] = React.useState<AuthState>();
     const [theme, setTheme] = React.useState<string>();
@@ -39,28 +40,35 @@ const PrivateApp: FunctionComponent = () => {
             }
 
             let result = await API.get('covid19', "/userservice/preferences/philip@pwestlake.com/theme", init)
-            .catch(e =>  { return {value: "blue-dark"}});
-            
+                .catch(e => { return { value: "blue-dark" } });
+
             setTheme(result.value);
         }
     }
 
     React.useEffect(() => {
+        if (authState === undefined) {
+            Auth.currentAuthenticatedUser().then(authData => {
+                setAuthState(AuthState.SignedIn);
+                getTheme();
+            });
+        }
+
         return onAuthUIStateChange((nextAuthState, authData) => {
             setAuthState(nextAuthState);
             getTheme();
         });
-    }, []);
+    }, [authState]);
 
     return authState === AuthState.SignedIn && theme ? (
-            <App themeName={theme === undefined ? 'blue-dark' : theme}/>
+        <App themeName={theme === undefined ? 'blue-dark' : theme} />
     ) : (
-        <AmplifyAuthenticator style={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginTop: '32px'
-          }}/>
-    );
+            <AmplifyAuthenticator style={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: '32px'
+            }} />
+        );
 }
 
 export default PrivateApp;
