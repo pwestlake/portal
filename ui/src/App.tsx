@@ -9,6 +9,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import { grey } from '@material-ui/core/colors';
 import { Auth, API } from 'aws-amplify';
 import EquityFundView from './routes/private/equity-fund/equity-fund-view';
+import NewsView from './routes/private/equity-fund/news-view';
 
 interface AppProps {
   themeName: string;
@@ -18,10 +19,11 @@ interface ListItemLinkProps {
   icon?: React.ReactElement;
   primary: string;
   to: string;
+  onClick(itemName: string): void;
 }
 
 function ListItemLink(props: ListItemLinkProps) {
-  const { icon, primary, to } = props;
+  const { icon, primary, to, onClick } = props;
 
   const renderLink = React.useMemo(
     () =>
@@ -33,7 +35,7 @@ function ListItemLink(props: ListItemLinkProps) {
 
   return (
     <li>
-      <ListItem button component={renderLink}>
+      <ListItem button component={renderLink} onClick={() => onClick(primary)}>
         {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
         <ListItemText primary={primary} />
       </ListItem>
@@ -42,6 +44,7 @@ function ListItemLink(props: ListItemLinkProps) {
 }
 
 const App: FunctionComponent<AppProps> = ({themeName}) => {
+  const [context, setContext] = React.useState("");
   const [dotpercentRole, setDotpercentRole] = React.useState(false);
     React.useEffect(() => {
         Auth.currentSession().then(session => {
@@ -230,6 +233,15 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
     
   };
 
+  const [tab, setTab] = React.useState<number>(0);
+  const tabController = (index: number) => {
+    setTab(index);
+  }
+
+  const linkClicked = (name: string) => {
+    setContext(name);
+  }
+
   return (
     <MuiThemeProvider theme={theme}>
       <div className={classes.root}>
@@ -241,7 +253,7 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
                   <Icon>menu</Icon>
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>
-                  Portal
+                  {context}
                 </Typography>
                 <div>
                   <IconButton aria-label="display more actions" edge="end" color="inherit" onClick={handleClick}>
@@ -267,11 +279,11 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
                 variant="temporary" classes={{
                   paper: classes.drawerPaper,
                 }}>
-                <h3>Charts</h3>
+                <Typography variant="h6" style={{padding: "12px 0px 0px 12px"}}>Apps</Typography>
                 <List aria-label="main menu">
-                  <ListItemLink to="/private/covid19" primary="Covid-19" />
+                  <ListItemLink to="/private/covid19" primary="Covid-19" onClick={linkClicked}/>
                   {dotpercentRole &&
-                  <ListItemLink to="/private/equity-fund" primary="DotPercent" />}
+                  <ListItemLink to="/private/equity-fund" primary="DotPercent" onClick={linkClicked}/>}
                 </List>
               </Drawer>
 
@@ -283,7 +295,8 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
                 // })}
               >
                 <Route exact path="/private/covid19" render={() => <Covid19View />} />
-                <Route exact path="/private/equity-fund" render={() => <EquityFundView />} />
+                <Route exact path="/private/equity-fund" render={() => <EquityFundView selectedTab={tab} controller={tabController}/>} />
+                <Route exact path="/private/equity-fund/news/:id" render={() => <NewsView />} />
               </main>
             </Grid>
           </Grid>

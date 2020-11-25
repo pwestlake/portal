@@ -27,6 +27,17 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	switch {
 	case strings.Compare(path, "/news/newsitems") == 0:
 		return hdlr.All(request.QueryStringParameters, newsService, headers)
+	case strings.Contains(path, "/newsitem/"):
+		id, ok := request.PathParameters["id"]
+		if !ok {
+			return events.APIGatewayProxyResponse{
+				Body:       "{\"Error\",\"id missing\"}",
+				StatusCode: http.StatusBadRequest,
+				Headers:    headers,
+			}, nil
+		}
+
+		return hdlr.Get(id, newsService, headers)
 	}
 
 	return events.APIGatewayProxyResponse{

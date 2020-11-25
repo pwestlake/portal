@@ -9,6 +9,8 @@ import NewsTab from "./news-tab";
 
 
 interface EquityFundViewProps {
+  selectedTab: number;
+  controller(index: number): void;
 }
 
 interface TabPanelProps {
@@ -43,7 +45,6 @@ function a11yProps(index: any) {
 }
 
 const EquityFundView = (props: EquityFundViewProps) => {
-  const [tab, setTab] = React.useState<number>(0);
   const [catalog, setCatalog] = React.useState<EquityCatalogItemModel[]>([]);
   
   React.useEffect(() => {
@@ -70,7 +71,7 @@ const EquityFundView = (props: EquityFundViewProps) => {
 
 
   const tabChanged = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setTab(newValue);
+    props.controller(newValue);
   };
 
 
@@ -78,7 +79,7 @@ const EquityFundView = (props: EquityFundViewProps) => {
       <div className="main">
 
         <AppBar position="static" elevation={0}>
-          <Tabs value={tab} onChange={tabChanged}
+          <Tabs value={props.selectedTab} onChange={tabChanged}
             variant="scrollable"
             scrollButtons="auto"
             aria-label="covid-19 tabs">
@@ -88,14 +89,14 @@ const EquityFundView = (props: EquityFundViewProps) => {
           </Tabs>
         </AppBar>
         <Paper square={true} style={{width: "100vw", height: "calc(100vh - 104px)", overflow: "scroll"}}>
-          <TabPanel value={tab} index={0}>
+          <TabPanel value={props.selectedTab} index={0}>
             <LatestTab />
           </TabPanel>
-          <TabPanel value={tab} index={1}>
+          <TabPanel value={props.selectedTab} index={1}>
             <ChartsTab catalog={catalog}/>
           </TabPanel>
-          <TabPanel value={tab} index={2}>
-            <NewsTab/>
+          <TabPanel value={props.selectedTab} index={2}>
+            <NewsTab equities={catalog}/>
           </TabPanel>
         </Paper>
       </div>
