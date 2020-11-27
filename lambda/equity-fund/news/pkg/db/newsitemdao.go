@@ -122,9 +122,10 @@ func (s *NewsItemDAO) GetNewsItems(count int, offset *domain.NewsItem, id *strin
 	}
 
 	if (offset != nil) {
+		log.Printf("Dao: id %v datetime %v", offset.ID, offset.DateTime.Format("2006-01-02T15:04:05Z"))
 		exclusiveStartKeyMap := map[string]*dynamodb.AttributeValue {
-			":id": &dynamodb.AttributeValue{S: aws.String(offset.ID)},
-			":datetime": &dynamodb.AttributeValue{S: aws.String(offset.DateTime.Format("2006-01-02T15:04:05Z"))},
+			"id": &dynamodb.AttributeValue{S: aws.String(offset.ID)},
+			"datetime": &dynamodb.AttributeValue{S: aws.String(offset.DateTime.Format("2006-01-02T15:04:05Z"))},
 		}
 		params.ExclusiveStartKey = exclusiveStartKeyMap
 	}
@@ -190,9 +191,9 @@ func (s *NewsItemDAO) queryNewsItems(count int, offset *domain.NewsItem, id *str
 
 	if (offset != nil) {
 		exclusiveStartKeyMap := map[string]*dynamodb.AttributeValue {
-			":id": &dynamodb.AttributeValue{S: aws.String(offset.ID)},
-			":catalogref": &dynamodb.AttributeValue{S: id},
-			":datetime": &dynamodb.AttributeValue{S: aws.String(offset.DateTime.Format("2006-01-02T15:04:05Z"))},
+			"id": &dynamodb.AttributeValue{S: aws.String(offset.ID)},
+			"catalogref": &dynamodb.AttributeValue{S: id},
+			"datetime": &dynamodb.AttributeValue{S: aws.String(offset.DateTime.Format("2006-01-02T15:04:05Z"))},
 		}
 		params.ExclusiveStartKey = exclusiveStartKeyMap
 	}

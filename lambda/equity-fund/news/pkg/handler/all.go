@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"time"
 	"encoding/json"
 	"github.com/pwestlake/portal/lambda/equity-fund/news/pkg/domain"
 	"strconv"
@@ -35,7 +36,23 @@ func All(params map[string]string, newsService service.NewsService, headers map[
 	}
 
 	var startKey *domain.NewsItem = nil
+	key, hasKey := params["key"]
+	sortkey, hasSortkey := params["sortkey"]
+
+	var sortkeyDate time.Time
+	if hasSortkey {
+		sortkeyDate, err = time.Parse("2006-01-02T15:04:05Z", sortkey)
+	}
 	
+	if !hasKey || !hasSortkey || err != nil {
+		startKey = nil
+	} else {
+		startKey = &domain.NewsItem {
+			ID: key,
+			DateTime: sortkeyDate,
+		}
+	}
+
 	items, err := newsService.GetNewsItems(int(count), startKey, idptr)
 	if err != nil {
 		return events.APIGatewayProxyResponse{

@@ -20,10 +20,13 @@ interface NewsProps {
 
 interface NewsListProps extends NewsProps {
     itemSelected(value: string): void;
+    onScrollend(offset: NewsItem): void;
 }
 
 const NewsList = (props: NewsListProps) => {
     const [searchPanelOpen, setSearchPanelOpen] = React.useState(false);
+    let lastRow = React.useRef(null);
+    let lastItem = React.useRef<NewsItem>({} as NewsItem);
 
     const openSearchPanel = () => {
         setSearchPanelOpen(true);
@@ -40,6 +43,38 @@ const NewsList = (props: NewsListProps) => {
 
     const onItemSelected = (value: string) => {
         props.itemSelected(value);
+    }
+
+    const fetchMoreData = () => {
+        props.onScrollend(lastItem.current);
+    }
+
+    const intersectionObserver = React.useRef(
+        new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.target === lastRow.current) {
+                    fetchMoreData();
+                }
+            })
+        })
+    );
+
+    React.useEffect(() => {
+        lastItem.current = props.datasource[props.datasource.length - 1];
+    }, [props.datasource]);
+
+    React.useEffect(() => {
+        const obs = intersectionObserver;
+        return () => {
+            obs.current.disconnect();
+        }
+    }, []);
+
+    const rowCallback = (e: HTMLDivElement) => {
+        if (e !== null) {
+            lastRow.current = e;
+            intersectionObserver.current.observe(e);
+        }
     }
 
     return (
@@ -68,7 +103,7 @@ const NewsList = (props: NewsListProps) => {
             <Grid item>
                 <List>
                     {props.datasource.length > 0 && props.datasource.map((row) => (
-                        <div key={row.id}>
+                        <div key={row.id} ref={el => rowCallback(el)}>
                             <ListItem>
                                 <ListItemAvatar><Typography>{row.companycode}</Typography></ListItemAvatar>
                                 <ListItemText 
@@ -112,38 +147,54 @@ const NewsTable = (props: NewsProps) => {
 const NewsTab = (props: NewsTabProps) => {
     const theme = useTheme();
     const greaterThanSm = useMediaQuery(theme.breakpoints.up('sm'));
-    const [data, setData] = React.useState([]);
+    const [data, setData] = React.useState<NewsItem[]>([]);
     const [equity, setEquity] = React.useState<string>("");
+    const [newsOffset, setNewsOffset] = React.useState<NewsItem>({} as NewsItem);
     const history = useHistory();
 
-    React.useEffect(() => {
-        async function sourceAndSetData() {
-            let sessionObject = await Auth.currentSession().catch(e => undefined);
-            if (sessionObject !== undefined) {
-                let idToken = sessionObject.getIdToken().getJwtToken();
-                
-                let params: any = {count: 20};
-                if (equity !== undefined && equity.length > 0) {
-                    params.catalogref = equity;
-                }
-
-                let init = {
-                    response: false,
-                    headers: { Authorization: idToken },
-                    queryStringParameters: params
-                }
+    const fetchData = React.useCallback(
+        () => {
+            async function sourceAndSetData() {
+                let sessionObject = await Auth.currentSession().catch(e => undefined);
+                if (sessionObject !== undefined) {
+                    let idToken = sessionObject.getIdToken().getJwtToken();
+                    
+                    let params: any = {count: 20};
+                    if (equity !== undefined && equity.length > 0) {
+                        params.catalogref = equity;
+                    }
     
-                let result = await API.get('covid19', `/news/newsitems`, init)
-                .catch(e =>  { return {value: []}});
-            
-                setData(result as NewsItem[]);
-            }
-        }
+                    if (newsOffset !== undefined && newsOffset.id !== undefined) {
+                        params.key = newsOffset.id;
+                        params.sortkey = newsOffset.datetime;
+                    }
+
+                    let init = {
+                        response: false,
+                        headers: { Authorization: idToken },
+                        queryStringParameters: params
+                    }
         
-        sourceAndSetData();
-    }, [equity]);
+                    let result = await API.get('covid19', `/news/newsitems`, init)
+                    .catch(e =>  { return {value: []}});
+                
+                    if (result.length > 0) {
+                        setData((data) => data.concat(result as NewsItem[]));
+                    }
+                }
+            }
+            sourceAndSetData();
+        },
+        [equity, newsOffset],
+    );
+
+    React.useEffect(() => {
+        fetchData();
+    }, [fetchData]);
     
     const onEquityChanged = (item: string) => {
+        setData([]);
+        setNewsOffset({} as NewsItem);
         setEquity(item);
     }
 
@@ -151,12 +202,18 @@ const NewsTab = (props: NewsTabProps) => {
         history.push('/private/equity-fund/news/' + item);
     }
 
+    const fetchMoreData = (offset: NewsItem) => {
+        setNewsOffset(offset);
+    }
+
+    
     return (
         <div style={{height: "100%"}}>
             {greaterThanSm && <NewsTable equities={props.equities} equityChanged={onEquityChanged} datasource={data}/>}
             {!greaterThanSm && <NewsList equities={props.equities} 
                 equityChanged={onEquityChanged} 
                 itemSelected={onItemSelected}
+                onScrollend={fetchMoreData}
                 datasource={data}/>}
         </div>
     )
