@@ -5,6 +5,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { NewsItem } from "../../../models/newsitem";
 
 interface NewsViewProps {
+    id?: string
 }
 
 function toHtml(text: string): string {
@@ -24,7 +25,11 @@ function toHtml(text: string): string {
 }
 
 const NewsView = (props: NewsViewProps) => {
-    const {id} = useParams<any>();
+    let id: string = useParams<string>();
+    if (props.id !== undefined ) {
+        id = props.id;
+    }
+    
     const history = useHistory();
     const [newsItem, setNewsItem] = React.useState<NewsItem>({} as NewsItem);
 
@@ -56,7 +61,7 @@ const NewsView = (props: NewsViewProps) => {
     return (
         <Grid container direction="column">
             <Grid item>
-                <AppBar position="fixed" elevation={0}>
+                {props.id === undefined && <AppBar position="fixed" elevation={0}>
                     <Toolbar>
                         <IconButton edge="start" color="inherit" aria-label="back-arrow" onClick={() => back()}>
                             <Icon>arrow_back</Icon>
@@ -65,10 +70,10 @@ const NewsView = (props: NewsViewProps) => {
                             {newsItem.title}
                         </Typography>
                     </Toolbar>
-                </AppBar>
+                </AppBar>}
             </Grid>
             <Grid item>
-                <Paper style={{height: "calc(100vh - 56px)", overflow: "scroll", padding: "24px"}}>
+                <Paper square={true} style={{height: "calc(100vh - 56px)", overflow: "scroll", padding: "24px"}}>
                     <div dangerouslySetInnerHTML={{ __html: toHtml(newsItem.content)}}></div>
                 </Paper>
             </Grid>

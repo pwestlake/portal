@@ -96,7 +96,11 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
     palette: {
       primary: {
         main: '#42a5f5',
-        contrastText: '#ffffff',
+        contrastText: '#ffffff'
+      },
+      secondary: {
+        main: '#c8e6c9',
+        contrastText: '#000000'
       },
       type: 'dark',
       contrastThreshold: 3,
