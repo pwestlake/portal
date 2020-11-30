@@ -8,6 +8,10 @@ interface NewsViewProps {
     id?: string
 }
 
+interface NewsViewParams {
+    id: string
+}
+
 function toHtml(text: string): string {
     let html = "";
     if (text === undefined) {
@@ -25,8 +29,9 @@ function toHtml(text: string): string {
 }
 
 const NewsView = (props: NewsViewProps) => {
-    let id: string = useParams<string>();
-    if (props.id !== undefined ) {
+    let params: NewsViewParams = useParams<NewsViewParams>();
+    let id: string = params.id;
+    if (id === undefined ) {
         id = props.id;
     }
     
@@ -73,7 +78,7 @@ const NewsView = (props: NewsViewProps) => {
                 </AppBar>}
             </Grid>
             <Grid item>
-                <Paper square={true} style={{height: "calc(100vh - 56px)", overflow: "scroll", padding: "24px"}}>
+                <Paper square={true} style={props.id !== undefined ? {height: "calc(100vh - 160px)" , overflow: "scroll", padding: "24px"} : {height: "calc(100vh - 56px)", overflow: "scroll", padding: "24px"}}>
                     <div dangerouslySetInnerHTML={{ __html: toHtml(newsItem.content)}}></div>
                 </Paper>
             </Grid>

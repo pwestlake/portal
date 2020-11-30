@@ -135,7 +135,7 @@ const NewsTable = (props: NewsProps) => {
                         </TableContainer>
                     </Grid>
                     <Grid item xs={4}>
-                        <Paper>
+                        <Paper style={{overflow: "scroll"}}>
                             {selectedItem !== undefined && <NewsView id={selectedItem.id} />}
                         </Paper>
                     </Grid>
