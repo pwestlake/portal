@@ -46,7 +46,7 @@ function a11yProps(index: any) {
 
 const EquityFundView = (props: EquityFundViewProps) => {
   const [catalog, setCatalog] = React.useState<EquityCatalogItemModel[]>([]);
-  
+
   React.useEffect(() => {
     async function sourceAndSetData() {
       let sessionObject = await Auth.currentSession();

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import './App.css';
 import { AppBar, Toolbar, IconButton, Icon, Typography, Drawer, Theme, makeStyles, createStyles, Grid, List, ListItem, ListItemIcon, ListItemText, Menu, MenuItem, createMuiTheme, MuiThemeProvider } from '@material-ui/core';
-import { Route } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 import { Covid19View } from './routes/private/covid19/covid19-view';
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
 import { Omit } from '@material-ui/types';
@@ -10,6 +10,7 @@ import { grey } from '@material-ui/core/colors';
 import { Auth, API } from 'aws-amplify';
 import EquityFundView from './routes/private/equity-fund/equity-fund-view';
 import NewsView from './routes/private/equity-fund/news-view';
+import EODEditView from './routes/private/equity-fund/eod-edit-view';
 
 interface AppProps {
   themeName: string;
@@ -19,11 +20,15 @@ interface ListItemLinkProps {
   icon?: React.ReactElement;
   primary: string;
   to: string;
-  onClick(itemName: string): void;
+}
+
+export interface AppBarContext {
+  title: string;
+  showBackButton: boolean;
 }
 
 function ListItemLink(props: ListItemLinkProps) {
-  const { icon, primary, to, onClick } = props;
+  const { icon, primary, to } = props;
 
   const renderLink = React.useMemo(
     () =>
@@ -35,7 +40,7 @@ function ListItemLink(props: ListItemLinkProps) {
 
   return (
     <li>
-      <ListItem button component={renderLink} onClick={() => onClick(primary)}>
+      <ListItem button component={renderLink}>
         {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
         <ListItemText primary={primary} />
       </ListItem>
@@ -44,7 +49,8 @@ function ListItemLink(props: ListItemLinkProps) {
 }
 
 const App: FunctionComponent<AppProps> = ({themeName}) => {
-  const [context, setContext] = React.useState("");
+  const [title, setTitle] = React.useState<string>("");
+  const [renderBackButton, setRenderBackButton] = React.useState<boolean>(false);
   const [dotpercentRole, setDotpercentRole] = React.useState(false);
     React.useEffect(() => {
         Auth.currentSession().then(session => {
@@ -242,8 +248,9 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
     setTab(index);
   }
 
-  const linkClicked = (name: string) => {
-    setContext(name);
+  const history = useHistory();
+  const back = () => {
+    history.goBack();
   }
 
   return (
@@ -253,11 +260,14 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
           <Grid item xs={12}>
             <AppBar position="static" elevation={0} className={classes.appBar}>
               <Toolbar>
-                <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer(!state)}>
+                {!renderBackButton && <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer(!state)}>
                   <Icon>menu</Icon>
-                </IconButton>
+                </IconButton>}
+                {renderBackButton && <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => back()}>
+                  <Icon>arrow_back</Icon>
+                </IconButton>}
                 <Typography variant="h6" className={classes.title}>
-                  {context}
+                  {title}
                 </Typography>
                 <div>
                   <IconButton aria-label="display more actions" edge="end" color="inherit" onClick={handleClick}>
@@ -285,9 +295,9 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
                 }}>
                 <Typography variant="h6" style={{padding: "12px 0px 0px 12px"}}>Apps</Typography>
                 <List aria-label="main menu">
-                  <ListItemLink to="/private/covid19" primary="Covid-19" onClick={linkClicked}/>
+                  <ListItemLink to="/private/covid19" primary="Covid-19"/>
                   {dotpercentRole &&
-                  <ListItemLink to="/private/equity-fund" primary="DotPercent" onClick={linkClicked}/>}
+                  <ListItemLink to="/private/equity-fund" primary="DotPercent"/>}
                 </List>
               </Drawer>
 
@@ -298,9 +308,25 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
                 //   [classes.contentShift]: state,
                 // })}
               >
-                <Route exact path="/private/covid19" render={() => <Covid19View />} />
-                <Route exact path="/private/equity-fund" render={() => <EquityFundView selectedTab={tab} controller={tabController}/>} />
+                <Route exact path="/private/covid19" render={() => {
+                    setRenderBackButton(false);
+                    setTitle("Covid-19"); 
+                    return <Covid19View />
+                  }} />
+
+                <Route exact path="/private/equity-fund" render={() => {
+                    setRenderBackButton(true);
+                    setTitle("DotPercent"); 
+                    return <EquityFundView selectedTab={tab} controller={tabController}/>
+                  }} />
+
                 <Route exact path="/private/equity-fund/news/:id" render={() => <NewsView />} />
+
+                <Route exact path="/private/equity-fund/edit-price/:id" render={() => {
+                    setRenderBackButton(true);
+                    setTitle("Edit Price");
+                    return <EODEditView />
+                  }} />
               </main>
             </Grid>
           </Grid>
