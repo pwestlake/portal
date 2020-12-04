@@ -1,4 +1,5 @@
-import { AppBar, Grid, Icon, IconButton, makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Theme, Typography, useMediaQuery, useTheme } from "@material-ui/core";
+import { AppBar, Grid, Icon, IconButton, makeStyles, Snackbar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Theme, Typography, useMediaQuery, useTheme } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert/Alert";
 import { API, Auth } from "aws-amplify";
 import React from "react";
 import { useHistory } from "react-router-dom";
@@ -6,6 +7,11 @@ import { EndOfDayItem } from "../../../models/eoditem";
 import "./latest-tab.css";
 
 export interface LatestTabProps {
+}
+
+export interface NotificationMessage {
+    message: string;
+    severity: "success" | "error" | "warning" | "info";
 }
 
 interface TableItem extends EndOfDayItem {
@@ -34,8 +40,15 @@ const LatestTab = (props: LatestTabProps) => {
     const greaterThanSm = useMediaQuery(theme.breakpoints.up('sm'));
     const [selectedItem, setSelectedItem] = React.useState<TableItem>();
     const [editRole, setEditRole] = React.useState(false);
-    const history = useHistory();
+    const [notificationOpen, setNotificationOpen] = React.useState(false);
+    const history = useHistory<NotificationMessage>();
     
+    React.useEffect(() => {
+        if (history.location.state !== undefined) {
+            setNotificationOpen(true);
+        }
+    }, [history.location.state]);
+
     React.useEffect(() => {
         Auth.currentSession().then(session => {
             const details = session.getIdToken().decodePayload();
@@ -87,6 +100,11 @@ const LatestTab = (props: LatestTabProps) => {
 
     const onEditItem = () => {
         history.push('/private/equity-fund/edit-price/' + selectedItem.id);
+    }
+
+    const notificationClose = () => {
+        setNotificationOpen(false);
+        history.replace('/private/equity-fund', undefined);
     }
 
     return (
@@ -148,6 +166,12 @@ const LatestTab = (props: LatestTabProps) => {
                     </TableContainer>
                 </Grid>
             </Grid>
+
+            <Snackbar open={notificationOpen} autoHideDuration={6000} onClose={notificationClose}>
+                {notificationOpen && <Alert severity={history.location.state.severity} variant="filled" onClose={notificationClose}>
+                    {history.location.state.message}
+                    </Alert>}
+            </Snackbar>
         </div>
     );
 }

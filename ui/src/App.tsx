@@ -315,7 +315,7 @@ const App: FunctionComponent<AppProps> = ({themeName}) => {
                   }} />
 
                 <Route exact path="/private/equity-fund" render={() => {
-                    setRenderBackButton(true);
+                    setRenderBackButton(false);
                     setTitle("DotPercent"); 
                     return <EquityFundView selectedTab={tab} controller={tabController}/>
                   }} />
