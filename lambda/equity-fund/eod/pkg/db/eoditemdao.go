@@ -52,6 +52,28 @@ func (s *EndOfDayItemDAO) PutEndOfDayItems(items *[]domain.EndOfDayItem) error{
 	return err
 }
 
+// PutEndOfDayItem ...
+// Store the EndOfDayItem in the database
+func (s *EndOfDayItemDAO) PutEndOfDayItem(item *domain.EndOfDayItem) error{
+	dbSession := session.Must(session.NewSession())
+	client := dynamodb.New(dbSession, aws.NewConfig().WithEndpoint(s.endpoint).WithRegion(s.region))
+
+	var err error
+	
+	av, err := dynamodbattribute.MarshalMap(&item)
+	if err != nil {
+		log.Printf("Error marshalling EndOfDayItem type")
+	} else {
+		input := &dynamodb.PutItemInput{
+			Item:      av,
+			TableName: aws.String("EndOfDay")}
+
+		_, err = client.PutItem(input)
+	}
+
+	return err
+}
+
 // GetEndOfDayItems ...
 // Retrieve EndOfDayItems according to the id and from date
 func (s *EndOfDayItemDAO) GetEndOfDayItems(id string, from time.Time) (*[]domain.EndOfDayItem, error){
@@ -129,6 +151,41 @@ func (s *EndOfDayItemDAO) GetLatestItem(id string) (*domain.EndOfDayItem, error)
 		Limit: aws.Int64(1),
 		ScanIndexForward: aws.Bool(false),
 		KeyConditionExpression: aws.String("id = :id"),
+	}
+
+	resp, err := client.Query(&queryInput)
+	if err != nil {
+		return &domain.EndOfDayItem{}, err
+	}
+
+	if *resp.Count == 0 {
+		return nil, errors.New("Item not found")
+	}
+
+	err = dynamodbattribute.UnmarshalMap(resp.Items[0],  &endOfDayItem)
+	
+	return &endOfDayItem, err
+}
+
+// GetItem ...
+// Retrieve the end of day item for the given key: id and date
+func (s *EndOfDayItemDAO) GetItem(id string, date time.Time) (*domain.EndOfDayItem, error){
+	var endOfDayItem = domain.EndOfDayItem{}
+	dbSession := session.Must(session.NewSession())
+	client := dynamodb.New(dbSession, aws.NewConfig().WithEndpoint(s.endpoint).WithRegion(s.region))
+
+	expressionAttributeValues := map[string]*dynamodb.AttributeValue {
+		":id": &dynamodb.AttributeValue{S: aws.String(id)},
+		":date": &dynamodb.AttributeValue{S: aws.String(date.Format("2006-01-02T15:04:05Z"))},
+	}
+
+	queryInput := dynamodb.QueryInput {
+		TableName: aws.String("EndOfDay"),
+		ExpressionAttributeValues: expressionAttributeValues,
+		ExpressionAttributeNames: map[string]*string {"#d": aws.String("date")},
+		Limit: aws.Int64(1),
+		ScanIndexForward: aws.Bool(false),
+		KeyConditionExpression: aws.String("id = :id AND #d = :date"),
 	}
 
 	resp, err := client.Query(&queryInput)

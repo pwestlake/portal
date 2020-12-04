@@ -1,6 +1,7 @@
 package main
 
 import (
+	"time"
 	"fmt"
 	"net/http"
 	"strings"
@@ -24,7 +25,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	eodService := service.InitializeEndOfDayService()
 
 	switch {
-		// Timeseries close price for given id
+	// Timeseries close price for given id
 	case strings.Contains(path, "/timeseries/close"):
 		id, ok := request.PathParameters["id"]
 		if !ok {
@@ -36,9 +37,40 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		}
 		return hdlr.HandleTimeseriesClose(id, eodService, headers)
 
-		// Latest end of day price data for all
+	// Latest end of day price data for all
 	case strings.Contains(path, "/latest-eod"):
 		return hdlr.HandleLatestEndOfDay(eodService, headers)
+
+	// End of day price for a given id and date
+	case strings.Contains(path, "/price"):
+		id, ok := request.PathParameters["id"]
+		if !ok {
+			return events.APIGatewayProxyResponse{
+				Body:       "{\"Error\",\"id missing\"}",
+				StatusCode: http.StatusBadRequest,
+				Headers:    headers,
+			}, nil
+		}
+
+		dateString, ok := request.PathParameters["date"]
+		if !ok {
+			return events.APIGatewayProxyResponse{
+				Body:       "{\"Error\",\"date missing\"}",
+				StatusCode: http.StatusBadRequest,
+				Headers:    headers,
+			}, nil
+		}
+
+		date, err := time.Parse("20060102", dateString)
+		if err != nil {
+			return events.APIGatewayProxyResponse{
+				Body:       "{\"Error\",\"Invalid date format. Expected yyyyMMdd\"}",
+				StatusCode: http.StatusBadRequest,
+				Headers:    headers,
+			}, nil
+		}
+
+		return hdlr.HandleEndOfDayPrice(id, date, eodService, headers, )
 	}
 
 	return events.APIGatewayProxyResponse{
