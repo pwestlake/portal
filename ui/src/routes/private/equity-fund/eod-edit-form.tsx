@@ -39,7 +39,7 @@ const EODEditForm = (props: EODEditFormProps) => {
     
                 let result = await API.get('covid19', `/eod/price/${props.id}/${convertToyyyyMMdd(date)}`, init)
                 .catch(e =>  { 
-                    return {value: {}}});
+                    return {} as EndOfDayItem});
             
                 setEodItem(result as EndOfDayItem);
             }
@@ -112,8 +112,9 @@ const EODEditForm = (props: EODEditFormProps) => {
             return false;
         }
 
-        let valid = true;
+        let valid = fields.length > 0;
         for (let field of fields) {
+            console.log(field + " " + isFieldValid(field));
             valid = (valid && isFieldValid(field));
         }
 
@@ -132,6 +133,8 @@ const EODEditForm = (props: EODEditFormProps) => {
                         </Grid>
                         <Grid item>
                             <KeyboardDatePicker
+                                autoOk={true}
+                                style={{width: "167px"}}
                                 disableToolbar={mobile ? false : true}
                                 variant={mobile ? "dialog" : "inline"}
                                 format="dd/MM/yyyy"
@@ -139,7 +142,7 @@ const EODEditForm = (props: EODEditFormProps) => {
                                 id="date"
                                 value={eodItem.date}
                                 error={!isFieldValid("date")}
-                                helperText={!isFieldValid("date") ? "There is no price for this date" : ""}
+                                helperText={!isFieldValid("date") ? "No price for this date" : ""}
                                 name="date"
                                 onChange={handleDateChange}
                                 KeyboardButtonProps={{
@@ -168,9 +171,11 @@ const EODEditForm = (props: EODEditFormProps) => {
                         <Grid item>
                         <TextField id="open"
                             error={!isFieldValid("open")}
+                            helperText={isFieldValid("open") ? "" : "Invalid price"}
                             name="open"
                             inputProps={{style: {textAlign: "right"}}}
                             onChange={handleValueChange}
+                            onFocus={(e) => {e.target.select()}}
                             value={eodItem.open} />
                         </Grid>
                     </Grid>
@@ -183,9 +188,11 @@ const EODEditForm = (props: EODEditFormProps) => {
                         <Grid item>
                         <TextField id="high-price" 
                             error={!isFieldValid("high")}
+                            helperText={isFieldValid("high") ? "" : "Invalid price"}
                             inputProps={{style: {textAlign: "right"}}}
                             name="high"
                             onChange={handleValueChange}
+                            onFocus={(e) => {e.target.select()}}
                             value={eodItem.high} />
                         </Grid>
                     </Grid>
@@ -198,9 +205,11 @@ const EODEditForm = (props: EODEditFormProps) => {
                         <Grid item>
                         <TextField id="Low-price" 
                             error={!isFieldValid("low")}
+                            helperText={isFieldValid("low") ? "" : "Invalid price"}
                             inputProps={{style: {textAlign: "right"}}}
                             name="low"
                             onChange={handleValueChange}
+                            onFocus={(e) => {e.target.select()}}
                             value={eodItem.low} />
                         </Grid>
                     </Grid>
@@ -213,9 +222,11 @@ const EODEditForm = (props: EODEditFormProps) => {
                         <Grid item>
                         <TextField id="eod-price" 
                             error={!isFieldValid("close")}
+                            helperText={isFieldValid("close") ? "" : "Invalid price"}
                             inputProps={{style: {textAlign: "right"}}}
                             name="close"
                             onChange={handleValueChange}
+                            onFocus={(e) => {e.target.select()}}
                             value={eodItem.close} />
                         </Grid>
                     </Grid>
