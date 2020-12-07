@@ -55,7 +55,28 @@ const EODEditForm = (props: EODEditFormProps) => {
         history.goBack();
     }
 
+    const savePrice = async (): Promise<any> => {
+        let sessionObject = await Auth.currentSession();
+        let idToken = sessionObject.getIdToken().getJwtToken();
+        
+        let init = {
+          response: true,
+          headers: { Authorization: idToken },
+          body: eodItem
+        }
+    
+        return API.post('covid19', "/eod/price/", init)
+    }
+
     const handleSubmit = () => {
+        savePrice().then(() => {
+            
+        })
+        .catch(e =>  { 
+            console.log("Failed to persist eod item");
+            history.replace('/private/equity-fund', {severity: "warning", message: "Failed"});
+        });
+
         history.replace('/private/equity-fund', {severity: "success", message: "All done"});
     }
 
@@ -94,7 +115,7 @@ const EODEditForm = (props: EODEditFormProps) => {
 
     const handleValueChange = (e: any) => {
         const inputElement = e.target as HTMLInputElement;
-        setEodItem({...eodItem, [inputElement.name]: e.target.value});
+        setEodItem({...eodItem, [inputElement.name]: parseFloat(e.target.value)});
     }
 
     const isFieldValid = (field: string): boolean => {

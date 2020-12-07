@@ -15,7 +15,7 @@ import (
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	headers := map[string]string{
 		"Access-Control-Allow-Origin":  "*",
-		"Access-Control-Allow-Methods": "GET",
+		"Access-Control-Allow-Methods": "GET,POST",
 		"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
 		"Content-Type":                 "application/json",
 	}
@@ -42,7 +42,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return hdlr.HandleLatestEndOfDay(eodService, headers)
 
 	// End of day price for a given id and date
-	case strings.Contains(path, "/price"):
+	case strings.Contains(path, "/price") && request.HTTPMethod == http.MethodGet:
 		id, ok := request.PathParameters["id"]
 		if !ok {
 			return events.APIGatewayProxyResponse{
@@ -70,7 +70,12 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 			}, nil
 		}
 
-		return hdlr.HandleEndOfDayPrice(id, date, eodService, headers, )
+		return hdlr.HandleEndOfDayPrice(id, date, eodService, headers)
+
+		// Post end of day price
+		case strings.Contains(path, "/price") && request.HTTPMethod == http.MethodPost:
+			return hdlr.HandlePostEndOfDayPrice(request.Body, headers, eodService)
+
 	}
 
 	return events.APIGatewayProxyResponse{
