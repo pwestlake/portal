@@ -126,109 +126,111 @@ const EODEditForm = (props: EODEditFormProps) => {
 
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <form onSubmit={handleSubmit} autoComplete="off">
-                <Grid container direction="column" spacing={2}>
-                    <Grid item container direction="row" justify="space-between" spacing={2} style={{height: "94px"}}>
-                        <Grid item>
-                            <p>Date of price</p>
+            <form onSubmit={handleSubmit} autoComplete="off" style={{height: "100%"}}>
+                <Grid container direction="column" spacing={2} justify="space-between" style={{height: "100%"}}>
+                    <Grid item container direction="column" spacing={2}>
+                        <Grid item container direction="row" justify="space-between" spacing={2} style={{height: "94px"}}>
+                            <Grid item>
+                                <p>Date of price</p>
+                            </Grid>
+                            <Grid item>
+                                <KeyboardDatePicker
+                                    autoOk={true}
+                                    style={{width: "167px"}}
+                                    disableToolbar={mobile ? false : true}
+                                    variant={mobile ? "dialog" : "inline"}
+                                    format="dd/MM/yyyy"
+                                    margin="normal"
+                                    id="date"
+                                    value={eodItem.date}
+                                    error={!isFieldValid("date")}
+                                    helperText={!isFieldValid("date") ? "No price for this date" : ""}
+                                    name="date"
+                                    onChange={handleDateChange}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }} />
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <KeyboardDatePicker
-                                autoOk={true}
-                                style={{width: "167px"}}
-                                disableToolbar={mobile ? false : true}
-                                variant={mobile ? "dialog" : "inline"}
-                                format="dd/MM/yyyy"
-                                margin="normal"
-                                id="date"
-                                value={eodItem.date}
-                                error={!isFieldValid("date")}
-                                helperText={!isFieldValid("date") ? "No price for this date" : ""}
-                                name="date"
-                                onChange={handleDateChange}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }} />
-                        </Grid>
-                    </Grid>
 
-                    {/*Symbol*/}
-                    <Grid item container direction="row" justify="space-between" spacing={2} style={{height: "94px"}}>
-                        <Grid item>
-                            <p>Symbol</p>
+                        {/*Symbol*/}
+                        <Grid item container direction="row" justify="space-between" spacing={2} style={{height: "94px"}}>
+                            <Grid item>
+                                <p>Symbol</p>
+                            </Grid>
+                            <Grid item>
+                            <TextField id="symbol" 
+                                disabled={true}
+                                value={eodItem.symbol} />
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                        <TextField id="symbol" 
-                            disabled={true}
-                            value={eodItem.symbol} />
-                        </Grid>
-                    </Grid>
 
-                    {/*Open price*/}
-                    <Grid item container direction="row" justify="space-between" spacing={2} style={{height: "94px"}}>
-                        <Grid item>
-                            <p>Open price</p>
+                        {/*Open price*/}
+                        <Grid item container direction="row" justify="space-between" spacing={2} style={{height: "94px"}}>
+                            <Grid item>
+                                <p>Open price</p>
+                            </Grid>
+                            <Grid item>
+                            <TextField id="open"
+                                error={!isFieldValid("open")}
+                                helperText={isFieldValid("open") ? "" : "Invalid price"}
+                                name="open"
+                                inputProps={{style: {textAlign: "right"}}}
+                                onChange={handleValueChange}
+                                onFocus={(e) => {e.target.select()}}
+                                value={eodItem.open} />
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                        <TextField id="open"
-                            error={!isFieldValid("open")}
-                            helperText={isFieldValid("open") ? "" : "Invalid price"}
-                            name="open"
-                            inputProps={{style: {textAlign: "right"}}}
-                            onChange={handleValueChange}
-                            onFocus={(e) => {e.target.select()}}
-                            value={eodItem.open} />
-                        </Grid>
-                    </Grid>
 
-                    {/*High price*/}
-                    <Grid item container direction="row" justify="space-between" spacing={2} style={{height: "94px"}}>
-                        <Grid item>
-                            <p>High price</p>
+                        {/*High price*/}
+                        <Grid item container direction="row" justify="space-between" spacing={2} style={{height: "94px"}}>
+                            <Grid item>
+                                <p>High price</p>
+                            </Grid>
+                            <Grid item>
+                            <TextField id="high-price" 
+                                error={!isFieldValid("high")}
+                                helperText={isFieldValid("high") ? "" : "Invalid price"}
+                                inputProps={{style: {textAlign: "right"}}}
+                                name="high"
+                                onChange={handleValueChange}
+                                onFocus={(e) => {e.target.select()}}
+                                value={eodItem.high} />
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                        <TextField id="high-price" 
-                            error={!isFieldValid("high")}
-                            helperText={isFieldValid("high") ? "" : "Invalid price"}
-                            inputProps={{style: {textAlign: "right"}}}
-                            name="high"
-                            onChange={handleValueChange}
-                            onFocus={(e) => {e.target.select()}}
-                            value={eodItem.high} />
-                        </Grid>
-                    </Grid>
 
-                    {/*Low price*/}
-                    <Grid item container direction="row" justify="space-between" spacing={2} style={{height: "94px"}}>
-                        <Grid item>
-                            <p>Low price</p>
+                        {/*Low price*/}
+                        <Grid item container direction="row" justify="space-between" spacing={2} style={{height: "94px"}}>
+                            <Grid item>
+                                <p>Low price</p>
+                            </Grid>
+                            <Grid item>
+                            <TextField id="Low-price" 
+                                error={!isFieldValid("low")}
+                                helperText={isFieldValid("low") ? "" : "Invalid price"}
+                                inputProps={{style: {textAlign: "right"}}}
+                                name="low"
+                                onChange={handleValueChange}
+                                onFocus={(e) => {e.target.select()}}
+                                value={eodItem.low} />
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                        <TextField id="Low-price" 
-                            error={!isFieldValid("low")}
-                            helperText={isFieldValid("low") ? "" : "Invalid price"}
-                            inputProps={{style: {textAlign: "right"}}}
-                            name="low"
-                            onChange={handleValueChange}
-                            onFocus={(e) => {e.target.select()}}
-                            value={eodItem.low} />
-                        </Grid>
-                    </Grid>
 
-                    {/*Close price*/}
-                    <Grid item container direction="row" justify="space-between" spacing={2} style={{height: "94px"}}>
-                        <Grid item>
-                            <p>Close price</p>
-                        </Grid>
-                        <Grid item>
-                        <TextField id="eod-price" 
-                            error={!isFieldValid("close")}
-                            helperText={isFieldValid("close") ? "" : "Invalid price"}
-                            inputProps={{style: {textAlign: "right"}}}
-                            name="close"
-                            onChange={handleValueChange}
-                            onFocus={(e) => {e.target.select()}}
-                            value={eodItem.close} />
+                        {/*Close price*/}
+                        <Grid item container direction="row" justify="space-between" spacing={2} style={{height: "94px"}}>
+                            <Grid item>
+                                <p>Close price</p>
+                            </Grid>
+                            <Grid item>
+                            <TextField id="eod-price" 
+                                error={!isFieldValid("close")}
+                                helperText={isFieldValid("close") ? "" : "Invalid price"}
+                                inputProps={{style: {textAlign: "right"}}}
+                                name="close"
+                                onChange={handleValueChange}
+                                onFocus={(e) => {e.target.select()}}
+                                value={eodItem.close} />
+                            </Grid>
                         </Grid>
                     </Grid>
 
