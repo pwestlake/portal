@@ -177,7 +177,7 @@ const EODEditForm = (props: EODEditFormProps) => {
                                 name="open"
                                 inputProps={{style: {textAlign: "right"}}}
                                 onChange={handleValueChange}
-                                onFocus={(e) => {e.target.select()}}
+                                onFocus={!mobile && ((e) => e.target.select())}
                                 value={eodItem.open} />
                             </Grid>
                         </Grid>
@@ -194,7 +194,7 @@ const EODEditForm = (props: EODEditFormProps) => {
                                 inputProps={{style: {textAlign: "right"}}}
                                 name="high"
                                 onChange={handleValueChange}
-                                onFocus={(e) => {e.target.select()}}
+                                onFocus={!mobile && ((e) => e.target.select())}
                                 value={eodItem.high} />
                             </Grid>
                         </Grid>
@@ -211,7 +211,7 @@ const EODEditForm = (props: EODEditFormProps) => {
                                 inputProps={{style: {textAlign: "right"}}}
                                 name="low"
                                 onChange={handleValueChange}
-                                onFocus={(e) => {e.target.select()}}
+                                onFocus={!mobile && ((e) => e.target.select())}
                                 value={eodItem.low} />
                             </Grid>
                         </Grid>
@@ -228,7 +228,7 @@ const EODEditForm = (props: EODEditFormProps) => {
                                 inputProps={{style: {textAlign: "right"}}}
                                 name="close"
                                 onChange={handleValueChange}
-                                onFocus={(e) => {e.target.select()}}
+                                onFocus={!mobile && ((e) => e.target.select())}
                                 value={eodItem.close} />
                             </Grid>
                         </Grid>
