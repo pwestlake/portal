@@ -7,6 +7,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { EndOfDayItem } from "../../../models/eoditem";
 import { API, Auth } from "aws-amplify";
 import { convertToyyyyMMdd } from "../../../utils/date";
+import './eod-edit-form.css';
 
 interface EODEditFormProps {
     id: string;
@@ -233,7 +234,7 @@ const EODEditForm = (props: EODEditFormProps) => {
 
                     
 
-                    <Grid item container direction="row" justify="flex-end" spacing={2} style={{paddingTop: "96px"}}>
+                    <Grid item container direction="row" justify="flex-end" spacing={2} className={mobile ? "mobile-submit-button-layout" : "submit-button-layout"}>
                         <Grid item>
                             <Button variant="contained" color="primary" onClick={() => handleCancel()}>
                                 Cancel

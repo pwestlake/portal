@@ -1,0 +1,9 @@
+.mobile-submit-button-layout {
+    position: absolute;
+    bottom: 24px;
+    right: 16px;
+}
+
+.submit-button-layout {
+    padding-top: 72px !important;
+}
