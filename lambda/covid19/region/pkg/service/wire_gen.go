@@ -7,24 +7,33 @@ package service
 
 import (
 	"github.com/pwestlake/portal/lambda/covid19/region/pkg/db"
+	"github.com/pwestlake/portal/lambda/covid19/region/pkg/domain"
 )
 
 // Injectors from wire.go:
 
 func InitializeRegionService() RegionServiceInterface {
 	regionDao := db.NewRegionDao()
-	regionServiceInterface := NewRegionService(regionDao)
+	covid19RegionJHDao := db.NewCovid19RegionJHDao()
+	regionServiceInterface := NewRegionService(regionDao, covid19RegionJHDao)
 	return regionServiceInterface
 }
 
 // wire.go:
 
 type dummyService struct {
-	regionDao db.RegionDao
+	regionDao          db.RegionDao
+	covid19RegionJHDao db.Covid19RegionJHDao
 }
 
 // GetRegionNames ...
 // Dummy method
 func (s *dummyService) GetRegionNames() (*[]string, error) {
+	return nil, nil
+}
+
+// GetRegions ...
+// Dummy method
+func (s *dummyService) GetRegions() (*[]domain.Region, error) {
 	return nil, nil
 }
